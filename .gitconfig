@@ -1,0 +1,25 @@
+[credential]
+	helper = store
+
+[user]
+	email = suzuki@hapis.k.u-tokyo.ac.jp
+	name = shun suzuki
+
+[core]
+    editor = nvim
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[init]
+    defaultBranch = main
+
+[delta]
+    navigate = true
+    dark = true
+    side-by-side = true
+
+[merge]
+    conflictStyle = zdiff3
+

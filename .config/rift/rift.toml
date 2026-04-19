@@ -1,0 +1,54 @@
+[modifier_combinations]
+mod = "Alt"
+
+[settings.layout]
+mode = "scrolling"
+column_width_ratio = 0.5
+focus_navigation_style = "directional"
+
+[settings.layout.gaps]
+outer = { top = 10, left = 10, bottom = 10, right = 10 }
+inner = { horizontal = 10, vertical = 10 }
+
+[keys]
+# Focus
+"mod + H" = { move_focus = "left" }
+"mod + L" = { move_focus = "right" }
+"mod + J" = { move_focus = "down" }
+"mod + K" = { move_focus = "up" }
+
+# Move Window
+"mod + Shift + H" = { move_window = "left" }
+"mod + Shift + L" = { move_window = "right" }
+"mod + Shift + J" = { move_window = "down" }
+"mod + Shift + K" = { move_window = "up" }
+
+# Layout
+"mod + F" = "toggle_fullscreen"
+"mod + S" = "toggle_stack"
+"mod + Q" = "close_window"
+
+# Workspaces (macOS Spaces)
+"mod + 1" = { focus_workspace = 1 }
+"mod + 2" = { focus_workspace = 2 }
+"mod + 3" = { focus_workspace = 3 }
+"mod + 4" = { focus_workspace = 4 }
+"mod + 5" = { focus_workspace = 5 }
+"mod + 6" = { focus_workspace = 6 }
+"mod + 7" = { focus_workspace = 7 }
+"mod + 8" = { focus_workspace = 8 }
+"mod + 9" = { focus_workspace = 9 }
+
+"mod + Shift + 1" = { move_window_to_workspace = 1 }
+"mod + Shift + 2" = { move_window_to_workspace = 2 }
+"mod + Shift + 3" = { move_window_to_workspace = 3 }
+"mod + Shift + 4" = { move_window_to_workspace = 4 }
+"mod + Shift + 5" = { move_window_to_workspace = 5 }
+"mod + Shift + 6" = { move_window_to_workspace = 6 }
+"mod + Shift + 7" = { move_window_to_workspace = 7 }
+"mod + Shift + 8" = { move_window_to_workspace = 8 }
+"mod + Shift + 9" = { move_window_to_workspace = 9 }
+
+# Applications
+"mod + Return" = { spawn = "/Applications/WezTerm.app/Contents/MacOS/wezterm" }
+"mod + Space" = { spawn = "open -a Spotlight" }

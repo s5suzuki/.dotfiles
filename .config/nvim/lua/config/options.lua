@@ -1,0 +1,32 @@
+vim.opt.number = true
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.termguicolors = true
+vim.opt.clipboard = "unnamedplus"
+vim.opt.cursorline = true
+vim.g.mapleader = " "
+vim.opt.whichwrap:append("<,>,[,],h,l")
+
+vim.opt.swapfile = false
+
+vim.opt.fillchars:append({
+	diff = " ",
+	eob = " ",
+})
+
+if os.getenv("ZELLIJ_SESSION_NAME") then
+	local pipe_path = "/tmp/nvim-" .. os.getenv("ZELLIJ_SESSION_NAME")
+	if not vim.uv.fs_stat(pipe_path) then
+		vim.fn.serverstart(pipe_path)
+	end
+end
+
+vim.api.nvim_create_autocmd("InsertLeave", {
+	pattern = "*",
+	callback = function()
+		vim.fn.system("fcitx5-remote -c")
+	end,
+})

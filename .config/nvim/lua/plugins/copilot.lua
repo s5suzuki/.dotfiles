@@ -1,0 +1,23 @@
+return {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+        require("copilot").setup({
+            panel = { enabled = false },
+            suggestion = {
+                enabled = true,
+                auto_trigger = true,
+                hide_during_completion = true,
+                keymap = {
+                    accept = "<C-l>",
+                    accept_word = "<C-Right>",
+                    accept_line = false,
+                    next = "<M-]>",
+                    prev = "<M-[>",
+                    dismiss = "<C-]>",
+                },
+            },
+        })
+    end,
+}
