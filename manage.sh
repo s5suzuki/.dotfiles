@@ -153,7 +153,54 @@ deploy() {
 		systemctl --user daemon-reload
 		systemctl --user enable --now kanata.service
 	else
-		echo "ℹ️ macOS では systemctl の設定をスキップします。"
+		echo "⚙️ macOS 用の kanata/driver 設定を適用します..."
+
+		LAUNCH_AGENTS_DIR="$HOME/Library/LaunchAgents"
+		mkdir -p "$LAUNCH_AGENTS_DIR"
+
+		DAEMON_PLIST="org.pqrs.Karabiner-VirtualHIDDevice-Daemon.plist"
+		if [ -f "$CONFIG_DIR/kanata/$DAEMON_PLIST" ]; then
+			echo "  ⚙️  Driver Daemon を登録します (sudoが必要)..."
+			sudo cp "$CONFIG_DIR/kanata/$DAEMON_PLIST" "/Library/LaunchDaemons/$DAEMON_PLIST"
+			sudo chown root:wheel "/Library/LaunchDaemons/$DAEMON_PLIST"
+			sudo chmod 644 "/Library/LaunchDaemons/$DAEMON_PLIST"
+
+			sudo launchctl bootout system "/Library/LaunchDaemons/$DAEMON_PLIST" 2>/dev/null
+			sudo launchctl bootstrap system "/Library/LaunchDaemons/$DAEMON_PLIST"
+		fi
+
+		MANAGER_PLIST="org.pqrs.Karabiner-VirtualHIDDevice-Manager.plist"
+		if [ -f "$CONFIG_DIR/kanata/$MANAGER_PLIST" ]; then
+			echo "  ⚙️  Driver Manager を登録します..."
+			launchctl bootout gui/$(id -u) "$LAUNCH_AGENTS_DIR/$MANAGER_PLIST" 2>/dev/null
+			ln -snf "$CONFIG_DIR/kanata/$MANAGER_PLIST" "$LAUNCH_AGENTS_DIR/$MANAGER_PLIST"
+			launchctl bootstrap gui/$(id -u) "$LAUNCH_AGENTS_DIR/$MANAGER_PLIST"
+		fi
+
+		PLIST_NAME="com.user.kanata.plist"
+		LAUNCH_DAEMONS_DIR="/Library/LaunchDaemons"
+
+		echo "  ⚙️  kanata サービスを System Daemon として登録します (sudoが必要)..."
+		launchctl bootout gui/$(id -u) "$HOME/Library/LaunchAgents/$PLIST_NAME" 2>/dev/null
+		rm -f "$HOME/Library/LaunchAgents/$PLIST_NAME"
+
+		sudo cp "$CONFIG_DIR/kanata/$PLIST_NAME" "$LAUNCH_DAEMONS_DIR/$PLIST_NAME"
+		sudo chown root:wheel "$LAUNCH_DAEMONS_DIR/$PLIST_NAME"
+		sudo chmod 644 "$LAUNCH_DAEMONS_DIR/$PLIST_NAME"
+
+		sudo launchctl bootout system "$LAUNCH_DAEMONS_DIR/$PLIST_NAME" 2>/dev/null
+		sudo launchctl bootstrap system "$LAUNCH_DAEMONS_DIR/$PLIST_NAME"
+
+		echo "  ✓ Installed and bootstrapped as System Daemon: $LAUNCH_DAEMONS_DIR/$PLIST_NAME"
+		
+		echo "⚠️  IMPORTANT: macOS Security Settings"
+		echo "  1. Go to System Settings > Privacy & Security > Accessibility"
+		echo "     and ensure 'kanata' is allowed."
+		echo "  2. Go to Privacy & Security > Input Monitoring"
+		echo "     and ensure 'kanata' is allowed."
+		echo "  3. Go to Privacy & Security > Full Disk Access"
+		echo "     and ensure 'Karabiner-VirtualHIDDevice-Daemon' and 'kanata' are allowed."
+		echo "  4. If you see a 'System Extension Blocked' popup, click 'Open System Settings' and 'Allow'."
 	fi
 
 	echo "✅ デプロイ完了！"
@@ -176,9 +223,6 @@ install_packages() {
 			exit 1
 		fi
 		brew install "${MACOS_PACKAGES[@]}"
-
-		echo "⚙️ kanata サービスを起動します..."
-		brew services start kanata
 		;;
 	*)
 		echo "❌ 未対応のOSです: $OS"
