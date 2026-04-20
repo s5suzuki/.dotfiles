@@ -1,6 +1,24 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
+local is_darwin = wezterm.target_triple:find("apple-darwin") ~= nil
+local fish_path = "fish"
+
+if is_darwin then
+	local brew_fish_paths = {
+		"/opt/homebrew/bin/fish",
+		"/usr/local/bin/fish",
+	}
+	for _, path in ipairs(brew_fish_paths) do
+		local f = io.open(path, "r")
+		if f then
+			f:close()
+			fish_path = path
+			break
+		end
+	end
+end
+
 config.enable_tab_bar = false
 config.enable_wayland = true
 config.window_decorations = "NONE"
@@ -10,7 +28,7 @@ config.use_ime = true
 config.font_size = 12.0
 config.color_scheme = "VSCodeDark+ (Gogh)"
 
-config.default_prog = { "fish" }
+config.default_prog = { fish_path }
 config.window_close_confirmation = "NeverPrompt"
 config.disable_default_key_bindings = true
 
@@ -43,7 +61,7 @@ wezterm.on("open-uri", function(window, pane, uri)
 		end
 
 		wezterm.run_child_process({
-			"fish",
+			fish_path,
 			"-c",
 			"n " .. path,
 		}, {

@@ -142,15 +142,19 @@ deploy() {
 		echo "  ✓ Linked: ~/$target"
 	done
 
-    echo "⚙️ kanata の権限設定を確認します..."
-    if ! groups "$USER" | grep -q input ; then
-        echo "  ⚠️ ユーザーを input/uinput グループに追加する必要があります。"
-        sudo usermod -aG input $USER
-        echo "  (設定反映には再ログインが必要です)"
-    fi
-    echo "⚙️ kanata ユーザーサービスを有効化します..."
-    systemctl --user daemon-reload
-    systemctl --user enable --now kanata.service
+	if [ "$OS" != "darwin" ]; then
+		echo "⚙️ kanata の権限設定を確認します..."
+		if ! groups "$USER" | grep -q input; then
+			echo "  ⚠️ ユーザーを input/uinput グループに追加する必要があります。"
+			sudo usermod -aG input "$USER"
+			echo "  (設定反映には再ログインが必要です)"
+		fi
+		echo "⚙️ kanata ユーザーサービスを有効化します..."
+		systemctl --user daemon-reload
+		systemctl --user enable --now kanata.service
+	else
+		echo "ℹ️ macOS では systemctl の設定をスキップします。"
+	fi
 
 	echo "✅ デプロイ完了！"
 }
