@@ -1,7 +1,7 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
-local is_darwin = wezterm.target_triple:find("apple-darwin") ~= nil
+local is_darwin = wezterm.target_triple:find("darwin")
 local fish_path = "fish"
 
 if is_darwin then
