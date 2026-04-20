@@ -24,7 +24,7 @@ ARCH_PACKAGES=(
 	"git-delta"
 	"hypridle"
 	"hyprlock"
-	"kanata-bin"
+	"keyd"
 	"lazygit"
 	"lua-language-server"
 	"mailspring-bin"
@@ -59,13 +59,12 @@ CONFIG_TARGETS=(
     "fish"
     "fuzzel"
     "hypr"
-    "kanata"
+    "keyd"
     "lazygit"
     "mako"
 	"niri"
 	"nvim"
     "starship.toml"
-    "systemd/user/kanata.service"
     "waybar"
     "wezterm"
     "yazi"
@@ -119,15 +118,15 @@ deploy() {
 		echo "  ✓ Linked: ~/$target"
 	done
 
-	echo "⚙️ kanata の権限設定を確認します..."
-	if ! groups "$USER" | grep -q input; then
-		echo "  ⚠️ ユーザーを input/uinput グループに追加する必要があります。"
-		sudo usermod -aG input "$USER"
-		echo "  (設定反映には再ログインが必要です)"
+	echo "⚙️ keyd の設定を配置します..."
+	if [ -d "$CONFIG_DIR/keyd" ]; then
+		sudo mkdir -p /etc/keyd
+		sudo ln -sf "$CONFIG_DIR/keyd/default.conf" /etc/keyd/default.conf
+		echo "  ✓ Linked: /etc/keyd/default.conf"
 	fi
-	echo "⚙️ kanata ユーザーサービスを有効化します..."
-	systemctl --user daemon-reload
-	systemctl --user enable --now kanata.service
+
+	echo "⚙️ keyd サービスを有効化します..."
+	sudo systemctl enable --now keyd
 
 	echo "✅ デプロイ完了！"
 }
