@@ -135,7 +135,7 @@ install_packages() {
 	echo "📥 必要なパッケージをインストールします ($OS)..."
 
 	case "$OS" in
-	cachyos | arch)
+	cachyos | arch | archarm)
 		if ! command -v paru >/dev/null 2>&1; then
 			echo "❌ paru が見つかりません。先に paru をインストールしてください。"
 			exit 1
