@@ -17,21 +17,6 @@ input {
     }
 }
 
-// Monitor configuration
-output "DP-1" {
-    mode "3840x2160@60"
-    scale 1.75
-    transform "normal"
-    position x=0 y=0
-}
-output "DP-2" {
-    focus-at-startup
-    mode "3840x1600@60"
-    scale 1
-    transform "normal"
-    position x=0 y=0
-}
-
 layout {
     gaps 4
     center-focused-column "never"
@@ -65,33 +50,6 @@ layout {
     struts {
 
     }
-}
-
-// Application configuration
-spawn-at-startup "waybar"
-spawn-at-startup "mako"
-spawn-at-startup "mailspring" "--password-store=gnome-libsecret" "--background"
-spawn-at-startup "slack" "-u"
-spawn-at-startup "wezterm"
-spawn-at-startup "hypridle"
-spawn-at-startup "obsidian"
-window-rule {
-    match app-id="slack"
-    open-on-output "DP-1"
-}
-window-rule {
-    match app-id="obsidian"
-    open-on-output "DP-1"
-    open-focused true
-}
-window-rule {
-    match app-id="wezterm"
-    open-on-output "DP-2"
-    open-focused true
-}
-window-rule {
-    match app-id="firefox$" title="^Picture-in-Picture$"
-    open-floating true
 }
 
 hotkey-overlay {
@@ -386,3 +344,6 @@ binds {
         power-off-monitors
     }
 }
+
+// Machine-specific configuration
+include "local-config.kdl"
