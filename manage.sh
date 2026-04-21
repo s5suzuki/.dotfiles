@@ -11,6 +11,7 @@ else
 fi
 
 ARCH_PACKAGES=(
+    "blueman"
 	"deno"
 	"firefox"
 	"fish"
@@ -33,7 +34,6 @@ ARCH_PACKAGES=(
 	"niri"
 	"obsidian-bin"
 	"openssh"
-	"overskride"
 	"pavucontrol"
 	"ripgrep"
 	"rust-analyzer"
