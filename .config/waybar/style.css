@@ -23,8 +23,13 @@ window#waybar {
 #clock,
 #tray,
 #pulseaudio,
-#battery {
+#battery,
+#network {
     padding: 0 10px;
+}
+
+#network {
+    color: #94e2d5;
 }
 
 #pulseaudio {
@@ -67,6 +72,7 @@ window#waybar {
 }
 
 #custom-power:hover,
-#bluetooth:hover {
+#bluetooth:hover,
+#network:hover {
     background-color: rgba(255, 255, 255, 0.1);
 }

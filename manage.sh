@@ -32,6 +32,7 @@ ARCH_PACKAGES=(
 	"mako"
 	"neovim"
 	"niri"
+    "nm-connection-editor"
 	"obsidian-bin"
 	"openssh"
 	"pavucontrol"
