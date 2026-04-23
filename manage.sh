@@ -4,166 +4,166 @@ DOTFILES_DIR="$HOME/.dotfiles"
 CONFIG_DIR="$HOME/.config"
 
 if [ -f /etc/os-release ]; then
-	. /etc/os-release
-	OS=$ID
+  . /etc/os-release
+  OS=$ID
 else
-	OS=$(uname -s)
+  OS=$(uname -s)
 fi
 
 ARCH_PACKAGES=(
-    "blueman"
-	"deno"
-	"firefox"
-	"fish"
-	"fcitx5"
-	"fcitx5-configtool"
-	"fcitx5-gtk"
-	"fcitx5-mozc"
-	"fcitx5-qt"
-	"fuzzel"
-	"git"
-	"git-delta"
-	"hypridle"
-	"hyprlock"
-	"keyd"
-	"lazygit"
-	"lua-language-server"
-	"mailspring-bin"
-	"mako"
-	"neovim"
-	"niri"
-    "nm-connection-editor"
-	"obsidian-bin"
-	"openssh"
-	"pavucontrol"
-	"ripgrep"
-	"rust-analyzer"
-	"rustup"
-	"slack-desktop-wayland"
-	"starship"
-	"stylua"
-	"tree-sitter-cli"
-	"ttf-hackgen"
-	"xdg-desktop-portal"
-	"xdg-desktop-portal-gtk"
-	"waybar"
-	"wezterm-git"
-	"wl-clipboard"
-	"nwg-bar"
-	"xwayland-satellite"
-	"yazi"
-	"zellij"
-	"zoxide"
+  "blueman"
+  "deno"
+  "firefox"
+  "fish"
+  "fcitx5"
+  "fcitx5-configtool"
+  "fcitx5-gtk"
+  "fcitx5-mozc"
+  "fcitx5-qt"
+  "fuzzel"
+  "git"
+  "git-delta"
+  "hypridle"
+  "hyprlock"
+  "keyd"
+  "lazygit"
+  "lua-language-server"
+  "mailspring-bin"
+  "mako"
+  "neovim"
+  "niri"
+  "nm-connection-editor"
+  "obsidian-bin"
+  "openssh"
+  "pavucontrol"
+  "ripgrep"
+  "rust-analyzer"
+  "rustup"
+  "slack-desktop-wayland"
+  "starship"
+  "stylua"
+  "tree-sitter-cli"
+  "ttf-hackgen"
+  "xdg-desktop-portal"
+  "xdg-desktop-portal-gtk"
+  "waybar"
+  "wezterm-git"
+  "wl-clipboard"
+  "nwg-bar"
+  "xwayland-satellite"
+  "yazi"
+  "zellij"
+  "zoxide"
 )
 
 CONFIG_TARGETS=(
-    "fish"
-    "fuzzel"
-    "hypr"
-    "keyd"
-    "lazygit"
-    "mako"
-	"niri"
-	"nwg-bar"
-	"nvim"
-    "starship.toml"
-    "waybar"
-    "wezterm"
-    "yazi"
-    "zellij"
+  "fish"
+  "fuzzel"
+  "hypr"
+  "keyd"
+  "lazygit"
+  "mako"
+  "niri"
+  "nwg-bar"
+  "nvim"
+  "starship.toml"
+  "waybar"
+  "wezterm"
+  "yazi"
+  "zellij"
 )
 
 HOME_TARGETS=(
-	".gitconfig"
+  ".gitconfig"
 )
 
 backup() {
-	echo "📦 現在の設定を $DOTFILES_DIR にバックアップします..."
-	mkdir -p "$DOTFILES_DIR/.config"
+  echo "📦 現在の設定を $DOTFILES_DIR にバックアップします..."
+  mkdir -p "$DOTFILES_DIR/.config"
 
-	for target in "${CONFIG_TARGETS[@]}"; do
-		if [ -e "$CONFIG_DIR/$target" ]; then
-			mkdir -p "$(dirname "$DOTFILES_DIR/.config/$target")"
-			cp -r "$CONFIG_DIR/$target" "$DOTFILES_DIR/.config/$target"
-			echo "  ✓ Saved: ~/.config/$target"
-		fi
-	done
+  for target in "${CONFIG_TARGETS[@]}"; do
+    if [ -e "$CONFIG_DIR/$target" ]; then
+      mkdir -p "$(dirname "$DOTFILES_DIR/.config/$target")"
+      cp -r "$CONFIG_DIR/$target" "$DOTFILES_DIR/.config/$target"
+      echo "  ✓ Saved: ~/.config/$target"
+    fi
+  done
 
-	for target in "${HOME_TARGETS[@]}"; do
-		if [ -e "$HOME/$target" ]; then
-			cp -r "$HOME/$target" "$DOTFILES_DIR/"
-			echo "  ✓ Saved: ~/$target"
-		fi
-	done
+  for target in "${HOME_TARGETS[@]}"; do
+    if [ -e "$HOME/$target" ]; then
+      cp -r "$HOME/$target" "$DOTFILES_DIR/"
+      echo "  ✓ Saved: ~/$target"
+    fi
+  done
 
-	echo "✅ バックアップ完了！"
+  echo "✅ バックアップ完了！"
 }
 
 deploy() {
-	echo "🔗 シンボリックリンクを展開します..."
+  echo "🔗 シンボリックリンクを展開します..."
 
-	mkdir -p "$CONFIG_DIR"
-	for target in "${CONFIG_TARGETS[@]}"; do
-		if [ -e "$CONFIG_DIR/$target" ] && [ ! -L "$CONFIG_DIR/$target" ]; then
-			mv "$CONFIG_DIR/$target" "$CONFIG_DIR/${target}.backup"
-		fi
-		mkdir -p "$(dirname "$CONFIG_DIR/$target")"
-		ln -snf "$DOTFILES_DIR/.config/$target" "$CONFIG_DIR/$target"
-		echo "  ✓ Linked: ~/.config/$target"
-	done
+  mkdir -p "$CONFIG_DIR"
+  for target in "${CONFIG_TARGETS[@]}"; do
+    if [ -e "$CONFIG_DIR/$target" ] && [ ! -L "$CONFIG_DIR/$target" ]; then
+      mv "$CONFIG_DIR/$target" "$CONFIG_DIR/${target}.backup"
+    fi
+    mkdir -p "$(dirname "$CONFIG_DIR/$target")"
+    ln -snf "$DOTFILES_DIR/.config/$target" "$CONFIG_DIR/$target"
+    echo "  ✓ Linked: ~/.config/$target"
+  done
 
-	for target in "${HOME_TARGETS[@]}"; do
-		if [ -e "$HOME/$target" ] && [ ! -L "$HOME/$target" ]; then
-			mv "$HOME/$target" "$HOME/${target}.backup"
-		fi
-		ln -snf "$DOTFILES_DIR/$target" "$HOME/$target"
-		echo "  ✓ Linked: ~/$target"
-	done
+  for target in "${HOME_TARGETS[@]}"; do
+    if [ -e "$HOME/$target" ] && [ ! -L "$HOME/$target" ]; then
+      mv "$HOME/$target" "$HOME/${target}.backup"
+    fi
+    ln -snf "$DOTFILES_DIR/$target" "$HOME/$target"
+    echo "  ✓ Linked: ~/$target"
+  done
 
-	echo "⚙️ keyd の設定を配置します..."
-	if [ -d "$CONFIG_DIR/keyd" ]; then
-		sudo mkdir -p /etc/keyd
-		sudo ln -sf "$CONFIG_DIR/keyd/default.conf" /etc/keyd/default.conf
-		echo "  ✓ Linked: /etc/keyd/default.conf"
-	fi
+  echo "⚙️ keyd の設定を配置します..."
+  if [ -d "$CONFIG_DIR/keyd" ]; then
+    sudo mkdir -p /etc/keyd
+    sudo ln -sf "$CONFIG_DIR/keyd/default.conf" /etc/keyd/default.conf
+    echo "  ✓ Linked: /etc/keyd/default.conf"
+  fi
 
-	echo "⚙️ keyd サービスを有効化します..."
-	sudo systemctl enable --now keyd
+  echo "⚙️ keyd サービスを有効化します..."
+  sudo systemctl enable --now keyd
 
-	echo "✅ デプロイ完了！"
+  echo "✅ デプロイ完了！"
 }
 
 install_packages() {
-	echo "📥 必要なパッケージをインストールします ($OS)..."
+  echo "📥 必要なパッケージをインストールします ($OS)..."
 
-	case "$OS" in
-	cachyos | arch | archarm)
-		if ! command -v paru >/dev/null 2>&1; then
-			echo "❌ paru が見つかりません。先に paru をインストールしてください。"
-			exit 1
-		fi
-		paru -S --needed "${ARCH_PACKAGES[@]}"
-		;;
-	*)
-		echo "❌ 未対応のOSです: $OS"
-		exit 1
-		;;
-	esac
+  case "$OS" in
+    cachyos | arch | archarm)
+      if ! command -v paru > /dev/null 2>&1; then
+        echo "❌ paru が見つかりません。先に paru をインストールしてください。"
+        exit 1
+      fi
+      paru -S --needed "${ARCH_PACKAGES[@]}"
+      ;;
+    *)
+      echo "❌ 未対応のOSです: $OS"
+      exit 1
+      ;;
+  esac
 
-	if [ "$SHELL" != "$(command -v fish)" ]; then
-		echo "🐟 デフォルトシェルを fish に変更します..."
-		sudo chsh -s "$(command -v fish)" "$USER"
-	fi
+  if [ "$SHELL" != "$(command -v fish)" ]; then
+    echo "🐟 デフォルトシェルを fish に変更します..."
+    sudo chsh -s "$(command -v fish)" "$USER"
+  fi
 
-	echo "✅ インストール完了！"
+  echo "✅ インストール完了！"
 }
 
 case "$1" in
-backup) backup ;;
-deploy) deploy ;;
-install) install_packages ;;
-*)
-	echo "Usage: $0 {backup|deploy|install}"
-	exit 1
-	;;
+  backup) backup ;;
+  deploy) deploy ;;
+  install) install_packages ;;
+  *)
+    echo "Usage: $0 {backup|deploy|install}"
+    exit 1
+    ;;
 esac
