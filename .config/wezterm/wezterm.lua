@@ -5,17 +5,6 @@ config.enable_tab_bar = false
 config.enable_wayland = true
 config.window_decorations = "NONE"
 
-local success, local_config = pcall(require, "wezterm-local")
-if success then
-	if type(local_config) == "function" then
-		local_config(config)
-	elseif type(local_config) == "table" then
-		for k, v in pairs(local_config) do
-			config[k] = v
-		end
-	end
-end
-
 config.font = wezterm.font("HackGen Console NF")
 config.use_ime = true
 config.font_size = 12.0
@@ -69,5 +58,16 @@ wezterm.on("open-uri", function(window, pane, uri)
 		return false
 	end
 end)
+
+local success, local_config = pcall(require, "wezterm-local")
+if success then
+	if type(local_config) == "function" then
+		local_config(config)
+	elseif type(local_config) == "table" then
+		for k, v in pairs(local_config) do
+			config[k] = v
+		end
+	end
+end
 
 return config
