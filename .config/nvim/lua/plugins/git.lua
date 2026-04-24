@@ -176,7 +176,7 @@ return {
 						style = "minimal",
 						border = "rounded",
 					})
-					vim.fn.termopen(cmd)
+					vim.cmd.terminal(cmd)
 					vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = buf, silent = true })
 				end, { desc = "Deltaで差分を表示" })
 			end,

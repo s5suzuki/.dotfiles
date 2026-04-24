@@ -17,7 +17,7 @@ return {
 
 			vim.keymap.set("n", "<leader>t", "<Cmd>ToggleTerm<CR>", { desc = "Terminal" })
 
-			function _G.set_terminal_keymaps()
+			local function set_terminal_keymaps()
 				local opts = { buffer = 0 }
 				vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], opts)
 				vim.keymap.set("t", "jj", [[<C-\><C-n>]], opts)
