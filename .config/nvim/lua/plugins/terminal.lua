@@ -31,7 +31,7 @@ return {
 				pattern = "term://*",
 				callback = function()
 					local file = vim.api.nvim_buf_get_name(0)
-					if string.find(file, "lazygit") then
+					if string.find(file, "lazygit") or string.find(file, "yazi") then
 						return
 					end
 
@@ -46,7 +46,7 @@ return {
 				pattern = "term://*",
 				callback = function()
 					local file = vim.api.nvim_buf_get_name(0)
-					if string.find(file, "lazygit") then
+					if string.find(file, "lazygit") or string.find(file, "yazi") then
 						return
 					end
 					vim.cmd(
