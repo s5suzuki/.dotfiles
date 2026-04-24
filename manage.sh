@@ -12,6 +12,7 @@ fi
 
 ARCH_PACKAGES=(
   "blueman"
+  "bottom"
   "deno"
   "firefox"
   "fish"
@@ -57,6 +58,7 @@ ARCH_PACKAGES=(
 )
 
 CONFIG_TARGETS=(
+  "bottom"
   "fish"
   "fuzzel"
   "hypr"
