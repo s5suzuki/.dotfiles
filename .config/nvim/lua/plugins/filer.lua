@@ -12,6 +12,8 @@ return {
 				close_if_last_window = true,
 				window = {
 					mappings = {
+						["l"] = "open",
+						["h"] = "close_node",
 						["<C-v>"] = "open_vsplit",
 						["<C-x>"] = "open_split",
 						["s"] = "none",
