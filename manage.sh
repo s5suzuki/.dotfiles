@@ -13,7 +13,6 @@ fi
 ARCH_PACKAGES=(
   "blueman"
   "bottom"
-  "deno"
   "firefox"
   "fish"
   "fcitx5"
