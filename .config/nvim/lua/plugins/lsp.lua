@@ -132,6 +132,20 @@ return {
 						return
 					end
 
+					if ft == "kdl" then
+						if vim.fn.executable("kdlfmt") == 1 then
+							local lines = vim.api.nvim_buf_get_lines(event.buf, 0, -1, false)
+							local output = vim.fn.systemlist({ "kdlfmt", "format", "-" }, lines)
+
+							if vim.v.shell_error == 0 then
+								vim.api.nvim_buf_set_lines(event.buf, 0, -1, false, output)
+							end
+						else
+							vim.notify("kdlfmtがインストールされていません", vim.log.levels.WARN)
+						end
+						return
+					end
+
 					local clients = vim.lsp.get_clients({ bufnr = event.buf })
 					if #clients > 0 then
 						vim.lsp.buf.format({ async = false })
