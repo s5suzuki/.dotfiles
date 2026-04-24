@@ -1,6 +1,7 @@
 local keymap = vim.keymap
 
 keymap.set("i", "jj", "<Esc>", { silent = true, desc = "ノーマルモードへ戻る" })
+keymap.set("i", "jk", "<Esc>:w<CR>", { desc = "Escape and save" })
 keymap.set("i", "っj", "<Esc>", { silent = true })
 
 keymap.set({ "n", "i", "v" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "ファイルを保存" })
@@ -23,8 +24,8 @@ keymap.set("v", "<C-/>", "gc", { remap = true, desc = "選択範囲をコメン�
 keymap.set("n", "<C-_>", "gcc", { remap = true, desc = "1行コメントアウト" })
 keymap.set("v", "<C-_>", "gc", { remap = true, desc = "選択範囲をコメントアウト" })
 
-vim.keymap.set("n", "sv", "<cmd>vsplit<cr>", { desc = "垂直に分割" })
-vim.keymap.set("n", "sx", "<cmd>split<cr>", { desc = "水平に分割" })
+keymap.set("n", "sv", "<cmd>vsplit<cr>", { desc = "垂直に分割" })
+keymap.set("n", "sx", "<cmd>split<cr>", { desc = "水平に分割" })
 
 keymap.set("n", "<A-h>", "<C-w>h")
 keymap.set("n", "<A-j>", "<C-w>j")
