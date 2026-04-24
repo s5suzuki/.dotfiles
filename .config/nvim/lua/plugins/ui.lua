@@ -3,7 +3,20 @@ return {
 		"akinsho/bufferline.nvim",
 		dependencies = "nvim-tree/nvim-web-devicons",
 		config = function()
-			require("bufferline").setup({})
+			require("bufferline").setup({
+				options = {
+					close_command = "bdelete! %d",
+					right_mouse_command = "bdelete! %d",
+					offsets = {
+						{
+							filetype = "neo-tree",
+							text = "File Explorer",
+							text_align = "left",
+							separator = true,
+						},
+					},
+				},
+			})
 			vim.keymap.set("n", "<Tab>", "<Cmd>BufferLineCycleNext<CR>", { desc = "次のタブ" })
 			vim.keymap.set("n", "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", { desc = "前のタブ" })
 			vim.keymap.set("n", "<leader>w", "<Cmd>bdelete<CR>", { desc = "タブを閉じる" })
