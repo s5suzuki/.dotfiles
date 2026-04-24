@@ -84,16 +84,38 @@ backup() {
   mkdir -p "$DOTFILES_DIR/.config"
 
   for target in "${CONFIG_TARGETS[@]}"; do
-    if [ -e "$CONFIG_DIR/$target" ]; then
-      mkdir -p "$(dirname "$DOTFILES_DIR/.config/$target")"
-      cp -r "$CONFIG_DIR/$target" "$DOTFILES_DIR/.config/$target"
+    src="$CONFIG_DIR/$target"
+    dest="$DOTFILES_DIR/.config/$target"
+
+    if [ -e "$src" ]; then
+      if [ -L "$src" ]; then
+        if [ "$(readlink -f "$src")" == "$dest" ]; then
+          echo "  - Skipped (already linked): ~/.config/$target"
+          continue
+        fi
+      fi
+
+      mkdir -p "$(dirname "$dest")"
+      rm -rf "$dest"
+      cp -r "$src" "$dest"
       echo "  ✓ Saved: ~/.config/$target"
     fi
   done
 
   for target in "${HOME_TARGETS[@]}"; do
-    if [ -e "$HOME/$target" ]; then
-      cp -r "$HOME/$target" "$DOTFILES_DIR/"
+    src="$HOME/$target"
+    dest="$DOTFILES_DIR/$target"
+
+    if [ -e "$src" ]; then
+      if [ -L "$src" ]; then
+        if [ "$(readlink -f "$src")" == "$dest" ]; then
+          echo "  - Skipped (already linked): ~/$target"
+          continue
+        fi
+      fi
+
+      rm -rf "$dest"
+      cp -r "$src" "$dest"
       echo "  ✓ Saved: ~/$target"
     fi
   done
