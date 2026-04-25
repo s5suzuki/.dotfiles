@@ -11,9 +11,12 @@ else
 fi
 
 ARCH_PACKAGES=(
+  "bat"
   "blueman"
   "bottom"
+  "dust-bin"
   "eza"
+  "fd"
   "firefox"
   "fish"
   "fcitx5"
@@ -37,9 +40,11 @@ ARCH_PACKAGES=(
   "obsidian-bin"
   "openssh"
   "pavucontrol"
+  "procs"
   "ripgrep"
   "rust-analyzer"
   "rustup"
+  "sd"
   "slack-desktop-wayland"
   "starship"
   "stylua"
