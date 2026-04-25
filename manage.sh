@@ -149,7 +149,7 @@ deploy() {
   done
 
   echo "⚙️ fcitx5 の設定を配置します..."
-  if [ -d "$HOME/.local/share/fcitx5/theme " ]; then
+  if [ ! -d "$HOME/.local/share/fcitx5/themes/catppuccin-mocha-lavender" ]; then
     git clone https://github.com/catppuccin/fcitx5.git
     mkdir -p $HOME/.local/share/fcitx5/themes/
     cp -r ./fcitx5/src/* $HOME/.local/share/fcitx5/themes
@@ -158,7 +158,7 @@ deploy() {
   fi
 
   echo "⚙️ bat のテーマを配置します..."
-  if [ -d "$CONFIG_DIR/bat/themes/" ]; then
+  if [ ! -d "$CONFIG_DIR/bat/themes/" ]; then
     mkdir -p "$CONFIG_DIR/bat/themes"
     wget -P "$CONFIG_DIR/bat/themes" https://github.com/catppuccin/bat/raw/main/themes/Catppuccin%20Mocha.tmTheme
     echo "  ✓ Installed: catppuccin bat themes"
