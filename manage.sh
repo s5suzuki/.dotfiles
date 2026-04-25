@@ -28,6 +28,7 @@ ARCH_PACKAGES=(
   "fuzzel"
   "git"
   "git-delta"
+  "handlr"
   "hypridle"
   "hyprlock"
   "keyd"
