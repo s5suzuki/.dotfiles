@@ -12,3 +12,4 @@ abbr --add !! 'eval $history[1] | wl-copy'
 abbr --add yz 'yazi'
 abbr --add lg 'lazygit'
 
+fish_config theme choose catppuccin-mocha

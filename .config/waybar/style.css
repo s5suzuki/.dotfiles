@@ -1,3 +1,5 @@
+@import "mocha.css";
+
 * {
     font-family: "HackGen Console NF", sans-serif;
     font-size: 14px;
@@ -6,18 +8,18 @@
 }
 
 window#waybar {
-    background-color: rgba(30, 30, 46, 0.8);
-    color: #cdd6f4;
+    background-color: shade(@base, 0.9);
+    border: 2px solid alpha(@crust, 0.3);
 }
 
 #workspaces button {
     padding: 0 5px;
-    color: #7f849c;
+    color: @overlay0;
     background: transparent;
 }
 
 #workspaces button.active {
-    color: #cba6f7;
+    color: @lavender;
 }
 
 #clock,
@@ -28,20 +30,24 @@ window#waybar {
     padding: 0 10px;
 }
 
+#clock {
+    color: @lavender;
+}
+
 #network {
-    color: #94e2d5;
+    color: @sky;
 }
 
 #pulseaudio {
-    color: #a6e3a1;
+    color: @green;
 }
 
 #battery {
-    color: #f9e2af;
+    color: @yellow;
 }
 
 #battery.critical:not(.charging) {
-    color: #f38ba8;
+    color: @red;
     animation-name: blink;
     animation-duration: 0.5s;
     animation-timing-function: linear;
@@ -50,29 +56,29 @@ window#waybar {
 }
 
 #bluetooth {
-    color: #89b4fa;
+    color: @blue;
     padding: 0 10px;
     margin: 0 4px;
 }
 
 #custom-power {
-    color: #f38ba8;
+    color: @red;
     font-size: 16px;
     padding: 0 12px;
     margin: 0 4px;
-    background-color: rgba(243, 139, 168, 0.1);
+    background-color: alpha(@red, 0.1);
     border-radius: 8px;
 }
 
 @keyframes blink {
     to {
-        background-color: rgba(243, 139, 168, 0.5);
-        color: #1e1e2e;
+        background-color: alpha(@red, 0.5);
+        color: @base;
     }
 }
 
 #custom-power:hover,
 #bluetooth:hover,
 #network:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: alpha(@text, 0.1);
 }

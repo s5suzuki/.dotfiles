@@ -13,6 +13,7 @@ fi
 ARCH_PACKAGES=(
   "blueman"
   "bottom"
+  "eza"
   "firefox"
   "fish"
   "fcitx5"
@@ -57,7 +58,11 @@ ARCH_PACKAGES=(
 )
 
 CONFIG_TARGETS=(
+  "bat"
   "bottom"
+  "delta"
+  "eza"
+  "fcitx5"
   "fish"
   "fuzzel"
   "hypr"
@@ -142,6 +147,22 @@ deploy() {
     ln -snf "$DOTFILES_DIR/$target" "$HOME/$target"
     echo "  ✓ Linked: ~/$target"
   done
+
+  echo "⚙️ fcitx5 の設定を配置します..."
+  if [ -d "$HOME/.local/share/fcitx5/theme " ]; then
+    git clone https://github.com/catppuccin/fcitx5.git
+    mkdir -p $HOME/.local/share/fcitx5/themes/
+    cp -r ./fcitx5/src/* $HOME/.local/share/fcitx5/themes
+    rm -rf ./fcitx5
+    echo "  ✓ Installed: catppuccin fcitx5 themes"
+  fi
+
+  echo "⚙️ bat のテーマを配置します..."
+  if [ -d "$CONFIG_DIR/bat/themes/" ]; then
+    mkdir -p "$CONFIG_DIR/bat/themes"
+    wget -P "$CONFIG_DIR/bat/themes" https://github.com/catppuccin/bat/raw/main/themes/Catppuccin%20Mocha.tmTheme
+    echo "  ✓ Installed: catppuccin bat themes"
+  fi
 
   echo "⚙️ keyd の設定を配置します..."
   if [ -d "$CONFIG_DIR/keyd" ]; then

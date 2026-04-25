@@ -1,3 +1,6 @@
+# Catppuccin Mocha for mako
+# Licensed under MIT (https://github.com/catppuccin/mako/blob/main/LICENSE)
+
 layer=overlay
 anchor=top-right
 
@@ -7,13 +10,16 @@ width=300
 border-size=2
 border-radius=8
 
-background-color=#1e1e2e
-text-color=#cdd6f4
-border-color=#89b4fa
-progress-color=#313244
-
 font=HackGen Console NF 12
 
 default-timeout=5000
 
 group-by=app-name
+
+background-color=#1e1e2e
+text-color=#cdd6f4
+border-color=#b4befe
+progress-color=over #313244
+
+[urgency=high]
+border-color=#fab387

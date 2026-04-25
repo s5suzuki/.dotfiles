@@ -1,11 +1,37 @@
+# Catppuccin Mocha for lazygit
+# Licensed under MIT (https://github.com/catppuccin/lazygit/blob/main/LICENSE)
+
 gui:
   nerdFontsVersion: "3"
   theme:
     activeBorderColor:
-      - "#007acc"
-      - "bold"
+      - '#b4befe'
+      - bold
     inactiveBorderColor:
-      - "#5a5a5a"
+      - '#a6adc8'
+    searchingActiveBorderColor:
+      - '#f9e2af'
+    optionsTextColor:
+      - '#89b4fa'
+    selectedLineBgColor:
+      - '#313244'
+    inactiveViewSelectedLineBgColor:
+      - '#6c7086'
+    cherryPickedCommitFgColor:
+      - '#b4befe'
+    cherryPickedCommitBgColor:
+      - '#45475a'
+    markedBaseCommitFgColor:
+      - '#89b4fa'
+    markedBaseCommitBgColor:
+      - '#f9e2af'
+    unstagedChangesColor:
+      - '#f38ba8'
+    defaultFgColor:
+      - '#cdd6f4'
+
+  authorColors:
+    '*': '#b4befe'
 git:
   log:
     order: "topo-order"

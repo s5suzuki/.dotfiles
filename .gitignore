@@ -2,4 +2,8 @@
 .DS_Store
 .config/niri/local-config.kdl
 .config/wezterm/wezterm-local.lua
-
+.config/fcitx5/profile
+.config/fcitx5/conf/*
+!.config/fcitx5/conf/classicui.conf
+.config/bat/themes
+.config/fish/themes

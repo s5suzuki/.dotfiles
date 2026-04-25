@@ -1,3 +1,6 @@
+[include]
+	path = ~/.config/delta/themes/catppuccin.gitconfig
+
 [credential]
 	helper = store
 
@@ -19,7 +22,7 @@
     navigate = true
     dark = true
     side-by-side = true
+    features = catppuccin-mocha
 
 [merge]
     conflictStyle = zdiff3
-

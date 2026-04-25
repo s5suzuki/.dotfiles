@@ -8,7 +8,7 @@ config.window_decorations = "NONE"
 config.font = wezterm.font("HackGen Console NF")
 config.use_ime = true
 config.font_size = 12.0
-config.color_scheme = "VSCodeDark+ (Gogh)"
+config.color_scheme = "Catppuccin Mocha"
 
 config.default_prog = { "fish" }
 config.window_close_confirmation = "NeverPrompt"
