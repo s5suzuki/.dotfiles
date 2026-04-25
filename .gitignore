@@ -3,6 +3,7 @@
 .config/niri/local-config.kdl
 .config/wezterm/wezterm-local.lua
 .config/fcitx5/profile
+.config/fcitx5/config
 .config/fcitx5/conf/*
 !.config/fcitx5/conf/classicui.conf
 .config/bat/themes
