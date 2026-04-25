@@ -7,6 +7,13 @@ starship init fish | source
 zoxide init fish | source
 atuin init fish | source
 
+fish_vi_key_bindings
+
+function fish_user_key_bindings
+    bind -M insert -m default jj backward-char force-repaint
+    bind -M default k 'atuin search --interactive (commandline -b)'
+end
+
 export SUDO_EDITOR=nvim
 
 abbr --add !! 'eval $history[1] | wl-copy'

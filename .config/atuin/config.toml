@@ -48,7 +48,9 @@
 keymap_mode = "vim-normal"
 
 ## whether to use the keymap for the shell, default is false
-# keymap_cursor = true
+[keymap_cursor]
+vim_insert = "blink-bar"
+vim_normal = "steady-block"
 
 ## whether to use the inline search, default is false
 # inline_height = 0
