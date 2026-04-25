@@ -5,6 +5,7 @@ fish_add_path ~/.npm-global/bin
 
 starship init fish | source
 zoxide init fish | source
+atuin init fish | source
 
 export SUDO_EDITOR=nvim
 

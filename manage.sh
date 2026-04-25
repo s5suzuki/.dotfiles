@@ -11,6 +11,7 @@ else
 fi
 
 ARCH_PACKAGES=(
+  "atuin"
   "bat"
   "blueman"
   "bottom"
@@ -63,6 +64,7 @@ ARCH_PACKAGES=(
 )
 
 CONFIG_TARGETS=(
+  "atuin"
   "bat"
   "bottom"
   "delta"

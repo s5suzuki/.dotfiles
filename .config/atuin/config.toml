@@ -1,0 +1,54 @@
+## where to store your database, default is your system data directory
+## linux: ~/.local/share/atuin/history.db
+## macos: ~/Library/Application Support/com.atuin.Atuin/history.db
+## windows: %USERPROFILE%\AppData\Local\atuin\history.db
+# db_path = "~/.history.db"
+
+## where to store your session file, default is your system cache directory
+## linux: ~/.cache/atuin/session
+## macos: ~/Library/Caches/com.atuin.Atuin/session
+## windows: %USERPROFILE%\AppData\Local\atuin\cache\session
+# session_path = "~/.session"
+
+## date format used, default is %d/%m/%Y
+# date_format = "%d/%m/%Y"
+
+## default timezone used, default is local timezone
+## it can be any valid timezone name from the central timezone database
+# timezone = "UTC"
+
+## default filter mode, default is global
+## can be one of global, host, session, directory
+# filter_mode = "global"
+
+## default search mode, default is fuzzy
+## can be one of fuzzy, prefix, fulltext, exact
+# search_mode = "fuzzy"
+
+## default sort order, default is rank
+## can be one of rank, date
+# sort_order = "rank"
+
+## whether to show the help row, default is true
+# show_help = true
+
+## whether to show the preview pane, default is false
+# show_preview = false
+
+## whether to use a sync server, default is true
+# sync_address = "https://api.atuin.sh"
+
+## frequency of sync, default is 1h
+# sync_frequency = "1h"
+
+## address of the atuin server
+# atuin_server = "https://api.atuin.sh"
+
+## whether to use the keymap, default is false
+keymap_mode = "vim-normal"
+
+## whether to use the keymap for the shell, default is false
+# keymap_cursor = true
+
+## whether to use the inline search, default is false
+# inline_height = 0
