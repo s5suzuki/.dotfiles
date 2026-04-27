@@ -15,7 +15,7 @@ ARCH_PACKAGES=(
   "bat"
   "blueman"
   "bottom"
-  "dust-bin"
+  "dust"
   "eza"
   "fd"
   "firefox"
