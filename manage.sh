@@ -57,6 +57,7 @@ ARCH_PACKAGES=(
   "waybar"
   "wezterm-git"
   "wl-clipboard"
+  "wlsunset"
   "nwg-bar"
   "xwayland-satellite"
   "yazi"

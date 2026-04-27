@@ -16,7 +16,6 @@ input {
 
     }
 }
-
 layout {
     gaps 4
     center-focused-column "never"
@@ -51,17 +50,17 @@ layout {
 
     }
 }
-
 hotkey-overlay {
     skip-at-startup true
 }
-
+spawn-at-startup "waybar"
+spawn-at-startup "mako"
+spawn-at-startup "hypridle"
+spawn-at-startup "wlsunset" "-t" "5000" "-T" "5001"
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
-
 animations {
 
 }
-
 // Keybindings
 binds {
     Mod+Shift+Slash {
@@ -344,6 +343,6 @@ binds {
         power-off-monitors
     }
 }
-
 // Machine-specific configuration
 include "local-config.kdl"
+
