@@ -156,11 +156,15 @@ deploy() {
     echo "  ✓ Linked: ~/$target"
   done
 
+  mkdir -p "$HOME/.cargo"
+  touch "$HOME/.cargo/env.fish"
+  touch .config/niri/local-config.kdl
+
   echo "⚙️ fcitx5 の設定を配置します..."
   if [ ! -d "$HOME/.local/share/fcitx5/themes/catppuccin-mocha-lavender" ]; then
     git clone https://github.com/catppuccin/fcitx5.git
-    mkdir -p $HOME/.local/share/fcitx5/themes/
-    cp -r ./fcitx5/src/* $HOME/.local/share/fcitx5/themes
+    mkdir -p "$HOME/.local/share/fcitx5/themes/"
+    cp -r ./fcitx5/src/* "$HOME/.local/share/fcitx5/themes"
     rm -rf ./fcitx5
     echo "  ✓ Installed: catppuccin fcitx5 themes"
   fi
