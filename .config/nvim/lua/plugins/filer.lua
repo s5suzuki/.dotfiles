@@ -43,17 +43,63 @@ return {
 					window = {
 						position = "left",
 						mappings = {
-							["<CR>"] = "open_diffview",
+							["<CR>"] = "open_delta_full",
+							["d"] = "open_delta_diff",
 							["o"] = "open",
 						},
 					},
 					commands = {
-						open_diffview = function(state)
+						open_delta_full = function(state)
 							local node = state.tree:get_node()
-							if node.type == "file" then
-								local filepath = node:get_id()
-								vim.cmd("DiffviewOpen -- " .. vim.fn.fnameescape(filepath))
+							if node.type ~= "file" then
+								return
 							end
+							local filepath = node:get_id()
+							local cmd = string.format(
+								"git diff -U9999 HEAD --color=always -- %s | delta --side-by-side --paging=never",
+								vim.fn.shellescape(filepath)
+							)
+
+							local width = math.ceil(vim.o.columns * 0.9)
+							local height = math.ceil(vim.o.lines * 0.8)
+							local buf = vim.api.nvim_create_buf(false, true)
+							vim.api.nvim_open_win(buf, true, {
+								relative = "editor",
+								width = width,
+								height = height,
+								col = math.ceil((vim.o.columns - width) / 2),
+								row = math.ceil((vim.o.lines - height) / 2),
+								style = "minimal",
+								border = "rounded",
+							})
+							vim.cmd.terminal(cmd)
+							vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = buf, silent = true })
+						end,
+						open_delta_diff = function(state)
+							local node = state.tree:get_node()
+							if node.type ~= "file" then
+								return
+							end
+							local filepath = node:get_id()
+							local cmd = string.format(
+								"git diff HEAD --color=always -- %s | delta --paging=never",
+								vim.fn.shellescape(filepath)
+							)
+
+							local width = math.ceil(vim.o.columns * 0.8)
+							local height = math.ceil(vim.o.lines * 0.8)
+							local buf = vim.api.nvim_create_buf(false, true)
+							vim.api.nvim_open_win(buf, true, {
+								relative = "editor",
+								width = width,
+								height = height,
+								col = math.ceil((vim.o.columns - width) / 2),
+								row = math.ceil((vim.o.lines - height) / 2),
+								style = "minimal",
+								border = "rounded",
+							})
+							vim.cmd.terminal(cmd)
+							vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = buf, silent = true })
 						end,
 					},
 				},
