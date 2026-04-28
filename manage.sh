@@ -50,8 +50,11 @@ ARCH_PACKAGES=(
   "slack-desktop-wayland"
   "starship"
   "stylua"
+  "tree-sitter-bash"
   "tree-sitter-cli"
+  "tree-sitter-json"
   "tree-sitter-rust"
+  "tree-sitter-toml"
   "ttf-hackgen"
   "xdg-desktop-portal"
   "xdg-desktop-portal-gtk"
@@ -91,6 +94,21 @@ CONFIG_TARGETS=(
 
 HOME_TARGETS=(
   ".gitconfig"
+)
+
+NVIM_TS_QUERY_LANGS=(
+  "bash"
+  "json"
+  "rust"
+  "toml"
+)
+
+NVIM_TS_QUERY_FILES=(
+  "highlights"
+  "injections"
+  "folds"
+  "indents"
+  "locals"
 )
 
 backup() {
@@ -178,6 +196,9 @@ deploy() {
     echo "  ✓ Installed: catppuccin bat themes"
   fi
 
+  echo "🌳 nvim tree-sitter クエリを配置します..."
+  install_nvim_ts_queries
+
   echo "⚙️ keyd の設定を配置します..."
   if [ -d "$CONFIG_DIR/keyd" ]; then
     sudo mkdir -p /etc/keyd
@@ -189,6 +210,26 @@ deploy() {
   sudo systemctl enable --now keyd
 
   echo "✅ デプロイ完了！"
+}
+
+install_nvim_ts_queries() {
+  local query_root="$HOME/.local/share/nvim/site/queries"
+  local base_url="https://raw.githubusercontent.com/neovim-treesitter"
+
+  for lang in "${NVIM_TS_QUERY_LANGS[@]}"; do
+    local dest="$query_root/$lang"
+    mkdir -p "$dest"
+    local installed=0
+    local attempted=0
+    for file in "${NVIM_TS_QUERY_FILES[@]}"; do
+      attempted=$((attempted + 1))
+      local url="$base_url/nvim-treesitter-queries-${lang}/main/queries/${file}.scm"
+      if curl -fsSL -o "$dest/${file}.scm" "$url" 2> /dev/null; then
+        installed=$((installed + 1))
+      fi
+    done
+    echo "  ✓ $lang ($installed/$attempted query files)"
+  done
 }
 
 install_packages() {

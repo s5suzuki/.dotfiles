@@ -10,6 +10,23 @@ return {
 			require("neoconf").setup()
 			require("lspconfig")
 
+			vim.api.nvim_create_autocmd("LspAttach", {
+				callback = function(args)
+					local client = vim.lsp.get_client_by_id(args.data.client_id)
+					if not client then
+						return
+					end
+
+					if client.server_capabilities.semanticTokensProvider then
+						client.server_capabilities.semanticTokensProvider = {
+							full = true,
+							legend = client.server_capabilities.semanticTokensProvider.legend,
+							range = true,
+						}
+					end
+				end,
+			})
+
 			vim.lsp.config.lua_ls = {
 				settings = {
 					Lua = {
@@ -26,6 +43,16 @@ return {
 								indent_style = "space",
 								indent_size = "2",
 							},
+						},
+					},
+				},
+			}
+
+			vim.lsp.config.rust_analyzer = {
+				settings = {
+					["rust-analyzer"] = {
+						semanticHighlighting = {
+							enable = true,
 						},
 					},
 				},

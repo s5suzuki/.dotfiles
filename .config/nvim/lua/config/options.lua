@@ -42,8 +42,9 @@ vim.api.nvim_create_autocmd({ "FileType", "BufReadPost" }, {
 		end
 
 		local lang = vim.treesitter.language.get_lang(ft) or ft
+
 		if pcall(vim.treesitter.language.add, lang) then
-			pcall(vim.treesitter.start, bufnr)
+			pcall(vim.treesitter.start, bufnr, lang)
 		end
 	end,
 })
