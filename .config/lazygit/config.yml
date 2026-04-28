@@ -2,6 +2,7 @@
 # Licensed under MIT (https://github.com/catppuccin/lazygit/blob/main/LICENSE)
 
 gui:
+  sidePanelWidth: 0.2
   nerdFontsVersion: "3"
   theme:
     activeBorderColor:
@@ -29,7 +30,6 @@ gui:
       - '#f38ba8'
     defaultFgColor:
       - '#cdd6f4'
-
   authorColors:
     '*': '#b4befe'
 git:
@@ -42,3 +42,9 @@ git:
   branchLogCmd: git log --graph --color=always --date=format:'%Y-%m-%d %H:%M' --pretty=format:'%C(#a0a0a0 reverse)%h%Creset %C(cyan)%ad%Creset %C(#dd4814)%ae%Creset %C(yellow reverse)%d%Creset %n%C(white bold)%s%Creset%n' {{branchName}} --
   allBranchesLogCmds:
     - git log --graph --color=always --date=format:'%Y-%m-%d %H:%M' --pretty=format:'%C(#a0a0a0 reverse)%h%Creset %C(cyan)%ad%Creset %C(#dd4814)%ae%Creset %C(yellow reverse)%d%Creset %n%C(white bold)%s%Creset%n' --
+customCommands:
+  - key: 'F'
+    command: "git diff -U9999 HEAD --color=always -- {{.SelectedFile.Name}} | delta --side-by-side --paging=always"
+    context: 'files'
+    description: 'Deltaで全文表示'
+    output: terminal

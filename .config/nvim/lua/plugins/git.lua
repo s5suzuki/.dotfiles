@@ -38,6 +38,9 @@ return {
 		keys = {
 			{ "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGitを起動" },
 		},
+		init = function()
+			vim.g.lazygit_floating_window_scaling_factor = 0.98
+		end,
 		config = function() end,
 	},
 	{
