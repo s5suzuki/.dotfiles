@@ -16,7 +16,6 @@ config.disable_default_key_bindings = true
 config.keys = {
 	{ key = "c", mods = "CTRL|SHIFT", action = wezterm.action.CopyTo("Clipboard") },
 	{ key = "v", mods = "CTRL|SHIFT", action = wezterm.action.PasteFrom("Clipboard") },
-	{ key = "v", mods = "CTRL", action = wezterm.action.PasteFrom("Clipboard") },
 }
 
 config.hyperlink_rules = wezterm.default_hyperlink_rules()
