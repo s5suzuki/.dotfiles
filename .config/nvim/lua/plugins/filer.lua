@@ -44,49 +44,56 @@ return {
 						position = "left",
 						mappings = {
 							["<CR>"] = "open_delta_full",
+							["l"] = "open_delta_full",
 							["d"] = "open_delta_diff",
 							["o"] = "open",
 						},
 					},
 					commands = {
 						open_delta_full = function(state)
-							local node = state.tree:get_node()
-							if node.type ~= "file" then
-								return
-							end
-							local filepath = node:get_id()
-							local cmd = string.format(
-								"git diff -U9999 HEAD --color=always -- %s | delta --side-by-side --paging=never",
-								vim.fn.shellescape(filepath)
-							)
-
-							local width = math.ceil(vim.o.columns * 0.9)
-							local height = math.ceil(vim.o.lines * 0.8)
-							local buf = vim.api.nvim_create_buf(false, true)
-							vim.api.nvim_open_win(buf, true, {
-								relative = "editor",
-								width = width,
-								height = height,
-								col = math.ceil((vim.o.columns - width) / 2),
-								row = math.ceil((vim.o.lines - height) / 2),
-								style = "minimal",
-								border = "rounded",
-							})
-							vim.cmd.terminal(cmd)
-							vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = buf, silent = true })
+							state.commands._open_delta(state, true)
 						end,
 						open_delta_diff = function(state)
+							state.commands._open_delta(state, false)
+						end,
+						_open_delta = function(state, is_full)
 							local node = state.tree:get_node()
 							if node.type ~= "file" then
+								state.commands.open(state)
 								return
 							end
 							local filepath = node:get_id()
-							local cmd = string.format(
-								"git diff HEAD --color=always -- %s | delta --paging=never",
-								vim.fn.shellescape(filepath)
-							)
 
-							local width = math.ceil(vim.o.columns * 0.8)
+							vim.fn.system("git ls-files --error-unmatch " .. vim.fn.shellescape(filepath))
+							local is_untracked = vim.v.shell_error ~= 0
+
+							local cmd
+							local width_ratio = 0.8
+							local delta_args = ""
+							local diff_args = "HEAD"
+
+							if is_full then
+								width_ratio = 0.9
+								delta_args = "--side-by-side"
+								diff_args = "-U9999 HEAD"
+							end
+
+							if is_untracked then
+								cmd = string.format(
+									"git diff --no-index --color=always /dev/null %s | delta %s --paging=never",
+									vim.fn.shellescape(filepath),
+									delta_args
+								)
+							else
+								cmd = string.format(
+									"git diff %s --color=always -- %s | delta %s --paging=never",
+									diff_args,
+									vim.fn.shellescape(filepath),
+									delta_args
+								)
+							end
+
+							local width = math.ceil(vim.o.columns * width_ratio)
 							local height = math.ceil(vim.o.lines * 0.8)
 							local buf = vim.api.nvim_create_buf(false, true)
 							vim.api.nvim_open_win(buf, true, {
