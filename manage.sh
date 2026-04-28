@@ -51,6 +51,7 @@ ARCH_PACKAGES=(
   "starship"
   "stylua"
   "tree-sitter-cli"
+  "tree-sitter-rust"
   "ttf-hackgen"
   "xdg-desktop-portal"
   "xdg-desktop-portal-gtk"
