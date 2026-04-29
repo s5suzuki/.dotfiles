@@ -1,3 +1,19 @@
+local function lsp_servers()
+	local clients = vim.lsp.get_clients({ bufnr = 0 })
+	if #clients == 0 then
+		return "No LSP"
+	end
+
+	local names = {}
+	for _, client in ipairs(clients) do
+		if client.name ~= "copilot" then
+			table.insert(names, client.name)
+		end
+	end
+
+	return " " .. table.concat(names, ", ")
+end
+
 return {
 	{
 		"akinsho/bufferline.nvim",
@@ -26,22 +42,6 @@ return {
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
-			local function lsp_servers()
-				local clients = vim.lsp.get_clients({ bufnr = 0 })
-				if #clients == 0 then
-					return "No LSP"
-				end
-
-				local names = {}
-				for _, client in ipairs(clients) do
-					if client.name ~= "copilot" then
-						table.insert(names, client.name)
-					end
-				end
-
-				return " " .. table.concat(names, ", ")
-			end
-
 			require("lualine").setup({
 				options = {
 					theme = "catppuccin-nvim",
@@ -49,6 +49,12 @@ return {
 					section_separators = { left = "", right = "" },
 				},
 				sections = {
+					lualine_c = {
+						{
+							"filename",
+							path = 1, -- 0: Just filename, 1: Relative path, 2: Absolute path
+						},
+					},
 					lualine_x = {
 						{
 							"diagnostics",
