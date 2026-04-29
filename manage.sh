@@ -209,6 +209,12 @@ deploy() {
   echo "⚙️ keyd サービスを有効化します..."
   sudo systemctl enable --now keyd
 
+  echo "⚙️ AIコミット生成スクリプトを配置します..."
+  mkdir -p "$HOME/.local/bin"
+  ln -snf "$DOTFILES_DIR/src/scripts/ai-commit-gen" "$HOME/.local/bin/ai-commit-gen"
+  chmod +x "$DOTFILES_DIR/src/scripts/ai-commit-gen"
+  echo "  ✓ Linked: ~/.local/bin/ai-commit-gen"
+
   echo "✅ デプロイ完了！"
 }
 
