@@ -43,6 +43,28 @@ git:
   allBranchesLogCmds:
     - git log --graph --color=always --date=format:'%Y-%m-%d %H:%M' --pretty=format:'%C(#a0a0a0 reverse)%h%Creset %C(cyan)%ad%Creset %C(#dd4814)%ae%Creset %C(yellow reverse)%d%Creset %n%C(white bold)%s%Creset%n' --
 customCommands:
+  - key: '<c-a>'
+    description: 'AIでコミットメッセージを生成'
+    context: 'global'
+    loadingText: 'AIがメッセージを生成中...'
+    command: "bash -c 'printf \"{{.Form.Msg}}\" > .git/COMMIT_EDITMSG && nvim .git/COMMIT_EDITMSG && [ -s .git/COMMIT_EDITMSG ] && git commit -F .git/COMMIT_EDITMSG || echo \"Commit aborted\"'"
+    prompts:
+      - type: 'menu'
+        title: 'AIモデルを選択'
+        key: 'Model'
+        options:
+          - name: 'Gemini 3.1 Flash (高速)'
+            value: 'gemini-3.1-flash-lite-preview'
+          - name: 'Gemini 3.1 Pro (高品質)'
+            value: 'gemini-3.1-pro-preview'
+      - type: 'menuFromCommand'
+        title: '候補を選択 (Enterで編集へ)'
+        key: 'Msg'
+        command: 'ai-commit-gen {{.Form.Model}}'
+        filter: '^(?P<raw>.+)$'
+        valueFormat: '{{ .raw }}'
+        labelFormat: '{{ .raw }}'
+    output: terminal
   - key: 'F'
     command: "git diff -U9999 HEAD --color=always -- {{.SelectedFile.Name}} | delta --side-by-side --paging=always"
     context: 'files'

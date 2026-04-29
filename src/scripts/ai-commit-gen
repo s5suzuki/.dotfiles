@@ -1,0 +1,25 @@
+#!/bin/bash
+MODEL=$1
+DIFF=$(git diff --cached)
+
+if [ -z "$DIFF" ]; then
+  echo "Staged changes not found."
+  exit 1
+fi
+
+PROMPT="Generate 5 concise and descriptive git commit messages for the following changes. 
+Output ONLY the messages, one per line, without any numbering, headers, or markdown formatting. 
+Focus on 'what' and 'why'."
+
+RESULT=$(echo "$DIFF" | gemini -m "$MODEL" -p "$PROMPT" --raw-output --accept-raw-output-risk 2> /dev/null | grep -vE "^(\[WARNING\]|Ripgrep is not available|Error)" | grep .)
+
+if [ -z "$RESULT" ]; then
+  RESULT=$(echo "$DIFF" | gemini -p "$PROMPT" --raw-output --accept-raw-output-risk 2> /dev/null | grep -vE "^(\[WARNING\]|Ripgrep is not available|Error)" | grep .)
+fi
+
+if [ -z "$RESULT" ]; then
+  echo "AI generation failed or returned empty. Please enter manually."
+  exit 0
+fi
+
+echo "$RESULT"
