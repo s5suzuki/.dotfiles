@@ -120,4 +120,25 @@ return {
 			})
 		end,
 	},
+	{
+		"echasnovski/mini.surround",
+		version = "*",
+		config = function()
+			require("mini.surround").setup()
+		end,
+	},
+	{
+		"echasnovski/mini.ai",
+		version = "*",
+		config = function()
+			local ai = require("mini.ai")
+			ai.setup({
+				custom_textobjects = {
+					-- a" や a' で前後の空白を巻き込まないように設定
+					['"'] = ai.gen_spec.pair('"', '"', { type = "greedy" }),
+					["'"] = ai.gen_spec.pair("'", "'", { type = "greedy" }),
+				},
+			})
+		end,
+	},
 }
