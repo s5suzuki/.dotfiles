@@ -134,9 +134,11 @@ return {
 			local ai = require("mini.ai")
 			ai.setup({
 				custom_textobjects = {
-					-- a" や a' で前後の空白を巻き込まないように設定
 					['"'] = ai.gen_spec.pair('"', '"', { type = "greedy" }),
 					["'"] = ai.gen_spec.pair("'", "'", { type = "greedy" }),
+					["`"] = ai.gen_spec.pair("`", "`", { type = "greedy" }),
+					["*"] = ai.gen_spec.pair("*", "*", { type = "greedy" }),
+					["_"] = ai.gen_spec.pair("_", "_", { type = "greedy" }),
 				},
 			})
 		end,
