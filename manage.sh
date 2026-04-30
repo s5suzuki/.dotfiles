@@ -86,6 +86,7 @@ CONFIG_TARGETS=(
   "nwg-bar"
   "nvim"
   "starship.toml"
+  "systemd/user/hypridle.service"
   "waybar"
   "wezterm"
   "yazi"
