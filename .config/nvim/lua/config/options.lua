@@ -17,7 +17,14 @@ vim.opt.swapfile = false
 vim.opt.fillchars:append({
 	diff = " ",
 	eob = " ",
+	fold = " ",
 })
+
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+vim.opt.foldtext = ""
 
 if os.getenv("ZELLIJ_SESSION_NAME") then
 	local pipe_path = "/tmp/nvim-" .. os.getenv("ZELLIJ_SESSION_NAME")
