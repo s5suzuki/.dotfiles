@@ -18,6 +18,12 @@ return {
 						["<C-x>"] = "open_split",
 						["s"] = "none",
 						["S"] = "none",
+						["["] = "prev_source",
+						["]"] = "next_source",
+						["<Tab>"] = "next_source",
+						["<S-Tab>"] = "prev_source",
+						["L"] = "next_source",
+						["H"] = "prev_source",
 					},
 				},
 				source_selector = {
