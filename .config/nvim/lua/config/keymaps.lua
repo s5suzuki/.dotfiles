@@ -1,6 +1,7 @@
 local keymap = vim.keymap
 
 keymap.set("i", "jj", "<Esc>", { silent = true, desc = "ノーマルモードへ戻る" })
+keymap.set("v", "<C-k>", "<Esc>", { desc = "ノーマルモードへ戻る" })
 keymap.set("i", "jk", "<Esc>:w<CR>", { desc = "Escape and save" })
 keymap.set("i", "っj", "<Esc>", { silent = true })
 
