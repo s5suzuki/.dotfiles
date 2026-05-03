@@ -10,8 +10,23 @@ atuin init fish | source
 fish_vi_key_bindings
 
 function fish_user_key_bindings
-    bind -M insert -m default jj backward-char force-repaint
+    bind -M insert j __fish_jj_binding
     bind -M default k 'atuin search --interactive (commandline -b)'
+end
+
+function __fish_jj_binding
+    set -l cursor (commandline -C)
+    if test $cursor -gt 0
+        set -l cmd (commandline -b)
+        set -l last_char (string sub -s $cursor -l 1 -- "$cmd")
+        if test "$last_char" = "j"
+            commandline -f backward-delete-char
+            set -g fish_bind_mode default
+            commandline -f force-repaint
+            return
+        end
+    end
+    commandline -i j
 end
 
 export SUDO_EDITOR=nvim
