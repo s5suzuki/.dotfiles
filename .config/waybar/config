@@ -10,6 +10,8 @@
         "clock"
     ],
     "modules-right": [
+        "cpu",
+        "memory",
         "tray",
         "pulseaudio",
         "bluetooth",
@@ -17,6 +19,13 @@
         "battery",
         "custom/power"
     ],
+    "cpu": {
+        "format": " {usage}%",
+        "tooltip": false
+    },
+    "memory": {
+        "format": " {percentage}%"
+    },
     "network": {
         "format-wifi": "  {essid}",
         "format-ethernet": "󰈀  {ipaddr}/{cidr}",

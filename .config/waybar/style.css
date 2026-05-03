@@ -26,8 +26,18 @@ window#waybar {
 #tray,
 #pulseaudio,
 #battery,
-#network {
+#network,
+#cpu,
+#memory {
     padding: 0 10px;
+}
+
+#cpu {
+    color: @peach;
+}
+
+#memory {
+    color: @mauve;
 }
 
 #clock {
