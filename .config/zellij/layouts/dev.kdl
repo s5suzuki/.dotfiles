@@ -5,12 +5,13 @@ layout {
         }
         pane split_direction="vertical" {
             pane size="70%" {
-                pane command="fish" focus=true size="75%" {
-                    args "-c" "nvim"
-                }
-                pane size="25%"
+                pane command="nvim" focus=true size="70%"
+                pane size="30%"
             }
-            pane size="30%"
+            pane size="30%" {
+                pane
+                pane command="btop" size="30%"
+            }
         }
         pane size=1 borderless=true {
             plugin location="zellij:status-bar"
@@ -173,6 +174,7 @@ layout {
     }
     swap_floating_layout name="staggered" {
         floating_panes {
+
         }
     }
     swap_floating_layout name="enlarged" {

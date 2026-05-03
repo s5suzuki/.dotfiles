@@ -16,6 +16,7 @@ ARCH_PACKAGES=(
   "blueman"
   "bottom"
   "brightnessctl"
+  "btop"
   "dust"
   "eza"
   "fd"
@@ -76,6 +77,7 @@ CONFIG_TARGETS=(
   "bat"
   "bottom"
   "delta"
+  "btop"
   "eza"
   "fcitx5"
   "fish"
@@ -232,8 +234,13 @@ install_nvim_ts_queries() {
     local attempted=0
     for file in "${NVIM_TS_QUERY_FILES[@]}"; do
       attempted=$((attempted + 1))
+      local target="$dest/${file}.scm"
+      if [ -f "$target" ]; then
+        installed=$((installed + 1))
+        continue
+      fi
       local url="$base_url/nvim-treesitter-queries-${lang}/main/queries/${file}.scm"
-      if curl -fsSL -o "$dest/${file}.scm" "$url" 2> /dev/null; then
+      if curl -fsSL -o "$target" "$url" 2> /dev/null; then
         installed=$((installed + 1))
       fi
     done
