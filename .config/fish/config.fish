@@ -45,5 +45,6 @@ alias grep='rg'
 alias ps='procs'
 alias du='dust'
 alias sed='sd'
+alias start='xdg-open'
 
 fish_config theme choose catppuccin-mocha
