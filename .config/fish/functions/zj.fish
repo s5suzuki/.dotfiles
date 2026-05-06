@@ -13,7 +13,7 @@ function zj -d "launch zellij in the specified directory"
         set session_name "root"
     end
 
-    zellij --layout dev attach -c "$session_name"
+    zellij --layout dev attach -c "$session_name" --force-run-commands
 
     cd $original_dir
 end
