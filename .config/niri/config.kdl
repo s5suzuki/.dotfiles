@@ -354,6 +354,9 @@ binds {
         power-off-monitors
     }
 }
+debug {
+    honor-xdg-activation-with-invalid-serial
+}
 // Machine-specific configuration
 include "local-config.kdl"
 
