@@ -10,6 +10,7 @@ keymap.set({ "n", "i", "v" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "ファイル
 keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR><Esc>", { desc = "検索ハイライトをクリア" })
 
 keymap.set("x", "p", '"_dP', { desc = "ペースト時にレジスタを上書きしない" })
+keymap.set({ "n", "v" }, "-", '"_', { desc = "ブラックホールレジスタを使用" })
 
 keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "選択行を下に移動" })
 keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "選択行を上に移動" })
