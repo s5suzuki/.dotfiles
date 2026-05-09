@@ -11,7 +11,7 @@ fish_vi_key_bindings
 
 function fish_user_key_bindings
     bind -M insert j __fish_jj_binding
-    bind -M default k 'atuin search --interactive (commandline -b)'
+    bind -M default k _atuin_search
 end
 
 function __fish_jj_binding
