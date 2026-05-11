@@ -15,9 +15,6 @@ keymap.set({ "n", "v" }, "-", '"_', { desc = "ブラックホールレジスタ�
 keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "選択行を下に移動" })
 keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "選択行を上に移動" })
 
-keymap.set("n", "<C-d>", "<C-d>zz", { desc = "下へスクロールし中央へ" })
-keymap.set("n", "<C-u>", "<C-u>zz", { desc = "上へスクロールし中央へ" })
-
 keymap.set("n", "n", "nzzzv", { desc = "次の検索結果へ(中央保持)" })
 keymap.set("n", "N", "Nzzzv", { desc = "前の検索結果へ(中央保持)" })
 

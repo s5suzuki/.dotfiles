@@ -120,7 +120,7 @@ return {
 
 			vim.keymap.set(
 				"n",
-				"<C-b>",
+				"<leader>b",
 				"<Cmd>Neotree toggle position=left source=filesystem<CR>",
 				{ desc = "ファイルツリーを開閉" }
 			)
