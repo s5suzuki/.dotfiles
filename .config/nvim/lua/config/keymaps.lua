@@ -23,6 +23,9 @@ keymap.set("v", "<C-/>", "gc", { remap = true, desc = "選択範囲をコメン�
 keymap.set("n", "<C-_>", "gcc", { remap = true, desc = "1行コメントアウト" })
 keymap.set("v", "<C-_>", "gc", { remap = true, desc = "選択範囲をコメントアウト" })
 
+keymap.set({ "n", "v", "o" }, "gh", "^", { desc = "行頭(空白を除く)へ移動" })
+keymap.set({ "n", "v", "o" }, "gl", "$", { desc = "行末へ移動" })
+
 keymap.set("n", "sv", "<cmd>vsplit<cr>", { desc = "垂直に分割" })
 keymap.set("n", "sx", "<cmd>split<cr>", { desc = "水平に分割" })
 
