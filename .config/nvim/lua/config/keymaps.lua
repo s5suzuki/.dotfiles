@@ -29,10 +29,10 @@ keymap.set({ "n", "v", "o" }, "gl", "$", { desc = "行末へ移動" })
 keymap.set("n", "sv", "<cmd>vsplit<cr>", { desc = "垂直に分割" })
 keymap.set("n", "sx", "<cmd>split<cr>", { desc = "水平に分割" })
 
-keymap.set("n", "<A-h>", "<C-w>h")
-keymap.set("n", "<A-j>", "<C-w>j")
-keymap.set("n", "<A-k>", "<C-w>k")
-keymap.set("n", "<A-l>", "<C-w>l")
+keymap.set("n", "<C-h>", "<C-w>h", { desc = "左のウィンドウへ移動" })
+keymap.set("n", "<C-j>", "<C-w>j", { desc = "下のウィンドウへ移動" })
+keymap.set("n", "<C-k>", "<C-w>k", { desc = "上のウィンドウへ移動" })
+keymap.set("n", "<C-l>", "<C-w>l", { desc = "右のウィンドウへ移動" })
 
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "gitgraph" },
