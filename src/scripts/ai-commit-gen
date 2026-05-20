@@ -11,10 +11,10 @@ PROMPT="Generate 5 concise and descriptive git commit messages for the following
 Output ONLY the messages, one per line, without any numbering, headers, or markdown formatting. 
 Focus on 'what' and 'why'."
 
-RESULT=$(echo "$DIFF" | gemini -m "$MODEL" -p "$PROMPT" --raw-output --accept-raw-output-risk 2> /dev/null | grep -vE "^(\[WARNING\]|Ripgrep is not available|Error)" | grep .)
+RESULT=$(echo "$DIFF" | agy -p "$PROMPT" 2> /dev/null)
 
 if [ -z "$RESULT" ]; then
-  RESULT=$(echo "$DIFF" | gemini -p "$PROMPT" --raw-output --accept-raw-output-risk 2> /dev/null | grep -vE "^(\[WARNING\]|Ripgrep is not available|Error)" | grep .)
+  RESULT=$(echo "$DIFF" | agy -p "$PROMPT" 2> /dev/null)
 fi
 
 if [ -z "$RESULT" ]; then
