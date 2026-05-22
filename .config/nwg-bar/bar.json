@@ -2,31 +2,26 @@
   {
     "label": "Lock",
     "exec": "hyprlock",
-    "icon": "system-lock-screen"
+    "icon": "/usr/share/nwg-bar/images/system-lock-screen.svg"
   },
   {
     "label": "Logout",
     "exec": "niri msg action quit --skip-confirmation",
-    "icon": "system-log-out"
+    "icon": "/usr/share/nwg-bar/images/system-log-out.svg"
   },
   {
     "label": "Suspend",
     "exec": "systemctl suspend",
-    "icon": "system-suspend"
-  },
-  {
-    "label": "Hibernate",
-    "exec": "systemctl hibernate",
-    "icon": "system-hibernate"
+    "icon": "/usr/share/nwg-bar/images/system-suspend.svg"
   },
   {
     "label": "Reboot",
     "exec": "systemctl reboot",
-    "icon": "system-reboot"
+    "icon": "/usr/share/nwg-bar/images/system-reboot.svg"
   },
   {
     "label": "Shutdown",
     "exec": "systemctl poweroff",
-    "icon": "system-shutdown"
+    "icon": "/usr/share/nwg-bar/images/system-shutdown.svg"
   }
 ]
