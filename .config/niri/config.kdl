@@ -6,7 +6,7 @@ input {
         numlock
     }
     touchpad {
-        tap
+        // tap
         natural-scroll
         dwt
     }
