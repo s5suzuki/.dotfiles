@@ -38,6 +38,9 @@ function fish_user_key_bindings
     # ctrl-k to escape in visual mode
     bind -M visual \ck 'set -g fish_bind_mode default; commandline -f force-repaint'
 
+    # ctrl-l to accept autosuggestion (replaces clear-screen)
+    bind -M insert \cl accept-autosuggestion
+
     # Existing bindings
     bind -M default k _atuin_search
 end
