@@ -26,13 +26,6 @@ vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
 vim.opt.foldtext = ""
 
-if os.getenv("ZELLIJ_SESSION_NAME") then
-	local pipe_path = "/tmp/nvim-" .. os.getenv("ZELLIJ_SESSION_NAME")
-	if not vim.uv.fs_stat(pipe_path) then
-		vim.fn.serverstart(pipe_path)
-	end
-end
-
 vim.api.nvim_create_autocmd("InsertLeave", {
 	pattern = "*",
 	callback = function()
