@@ -107,7 +107,6 @@ keybinds clear-defaults=true {
         bind "Ctrl r" {
             OverrideLayout {
                 layout "dev"
-                retain_existing_terminal_panes true
                 apply_only_to_active_tab true
             }
             SwitchToMode "normal"
