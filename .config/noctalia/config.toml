@@ -1,0 +1,75 @@
+[bar.default]
+center = ["date", "clock"]
+end = [
+    "tray",
+    "notifications",
+    "clipboard",
+    "network",
+    "bluetooth",
+    "volume",
+    "brightness",
+    "battery",
+    "control-center",
+    "session",
+]
+margin_edge = 0
+margin_ends = 0
+
+[calendar]
+enabled = true
+
+[calendar.account.hapis]
+name = "HAPIS"
+type = "google"
+
+[desktop_widgets]
+enabled = false
+
+[lockscreen]
+blurred_desktop = true
+
+[nightlight]
+enabled = true
+force = true
+temperature_day = 5600
+temperature_night = 5500
+
+[shell]
+font_family = "HackGen"
+settings_show_advanced = true
+ui_scale = 1.0500000081956387
+
+[theme]
+community_palette = "Catppuccin Lavender"
+source = "community"
+
+[theme.templates]
+builtin_ids = ["niri"]
+
+[wallpaper]
+enabled = false
+
+[widget.bongocat]
+script = "scripts/bongocat.lua"
+type = "scripted"
+
+[widget.date]
+format = "{:%b}{:%d}日{:%a}曜日"
+
+[idle]
+behavior_order = ["lock", "screen-off", "lock-and-suspend"]
+
+[idle.behavior.lock]
+action = "lock"
+enabled = true
+timeout = 600
+
+[idle.behavior.lock-and-suspend]
+action = "lock_and_suspend"
+enabled = false
+timeout = 900
+
+[idle.behavior.screen-off]
+action = "screen_off"
+enabled = true
+timeout = 660
