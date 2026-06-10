@@ -1,6 +1,8 @@
 [bar.default]
 center = ["date", "clock"]
 end = [
+    "cpu",
+    "ram",
     "tray",
     "notifications",
     "clipboard",
