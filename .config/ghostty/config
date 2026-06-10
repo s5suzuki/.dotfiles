@@ -8,6 +8,9 @@ window-show-tab-bar = never
 
 command = fish
 
+window-inherit-working-directory = false
+working-directory = home
+
 confirm-close-surface = false
 
 keybind = clear
