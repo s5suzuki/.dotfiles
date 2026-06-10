@@ -349,13 +349,13 @@ binds {
     XF86MonBrightnessDown {
         spawn "noctalia" "msg" "brightness-down"
     }
-    Print {
+    Mod+Shift+S {
         screenshot
     }
-    Ctrl+Print {
+    Mod+Ctrl+Shift+S {
         screenshot-screen
     }
-    Alt+Print {
+    Mod+Alt+Shift+S {
         screenshot-window
     }
     Mod+Escape allow-inhibiting=false {
