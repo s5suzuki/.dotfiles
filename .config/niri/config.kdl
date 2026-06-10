@@ -64,8 +64,8 @@ binds {
     Mod+Shift+Slash {
         show-hotkey-overlay
     }
-    Mod+T hotkey-overlay-title="Open a Terminal: WezTerm" {
-        spawn "wezterm"
+    Mod+T hotkey-overlay-title="Open a Terminal: Ghostty" {
+        spawn "ghostty"
     }
     Mod+Space hotkey-overlay-title="Run an Application: Noctalia" {
         spawn "noctalia" "msg" "panel-toggle" "launcher"
