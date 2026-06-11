@@ -21,8 +21,8 @@ return {
 		config = function()
 			require("bufferline").setup({
 				options = {
-					close_command = "bdelete! %d",
-					right_mouse_command = "bdelete! %d",
+					close_command = function(n) require("mini.bufremove").delete(n, false) end,
+					right_mouse_command = function(n) require("mini.bufremove").delete(n, false) end,
 					offsets = {
 						{
 							filetype = "neo-tree",
@@ -35,7 +35,7 @@ return {
 			})
 			vim.keymap.set("n", "<Tab>", "<Cmd>BufferLineCycleNext<CR>", { desc = "次のタブ" })
 			vim.keymap.set("n", "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", { desc = "前のタブ" })
-			vim.keymap.set("n", "<leader>w", "<Cmd>bdelete<CR>", { desc = "タブを閉じる" })
+			vim.keymap.set("n", "<leader>w", function() require("mini.bufremove").delete(0, false) end, { desc = "タブを閉じる" })
 		end,
 	},
 	{
