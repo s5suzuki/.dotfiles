@@ -9,13 +9,11 @@ atuin init fish | source
 
 fish_vi_key_bindings
 
-# Cursor shapes
 set -g fish_cursor_default block
 set -g fish_cursor_insert line
 set -g fish_cursor_replace_one underscore
 set -g fish_cursor_visual block
 
-# Auto switch fcitx5 to English on leaving insert mode
 function __fish_vi_fcitx_off --on-variable fish_bind_mode
     if test "$fish_bind_mode" != "insert"
         command -q fcitx5-remote; and fcitx5-remote -c
@@ -23,11 +21,9 @@ function __fish_vi_fcitx_off --on-variable fish_bind_mode
 end
 
 function fish_user_key_bindings
-    # jj, jk, っj to escape
     bind -M insert j __fish_vi_escape_j
     bind -M insert k __fish_vi_escape_k
 
-    # gh, gl to move to beginning/end of line
     for mode in default visual
         bind -M $mode gh beginning-of-line
         bind -M $mode gl end-of-line
@@ -35,13 +31,10 @@ function fish_user_key_bindings
     bind -M operator gh 'fish_vi_exec_motion beginning-of-line'
     bind -M operator gl 'fish_vi_exec_motion end-of-line'
 
-    # ctrl-k to escape in visual mode
     bind -M visual \ck 'set -g fish_bind_mode default; commandline -f force-repaint'
 
-    # ctrl-l to accept autosuggestion (replaces clear-screen)
     bind -M insert \cl accept-autosuggestion
 
-    # Existing bindings
     bind -M default k _atuin_search
 end
 
@@ -92,5 +85,6 @@ alias ps='procs'
 alias du='dust'
 alias sed='sd'
 alias start='xdg-open'
+alias clip='wl-copy'
 
 fish_config theme choose catppuccin-mocha
