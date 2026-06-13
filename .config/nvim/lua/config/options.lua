@@ -33,20 +33,18 @@ vim.api.nvim_create_autocmd("InsertLeave", {
 	end,
 })
 
-if not vim.g.vscode then
-	vim.api.nvim_create_autocmd({ "FileType", "BufReadPost" }, {
-		callback = function(args)
-			local bufnr = args.buf
-			local ft = vim.bo[bufnr].filetype
-			if ft == "" then
-				return
-			end
+vim.api.nvim_create_autocmd({ "FileType", "BufReadPost" }, {
+	callback = function(args)
+		local bufnr = args.buf
+		local ft = vim.bo[bufnr].filetype
+		if ft == "" then
+			return
+		end
 
-			local lang = vim.treesitter.language.get_lang(ft) or ft
+		local lang = vim.treesitter.language.get_lang(ft) or ft
 
-			if pcall(vim.treesitter.language.add, lang) then
-				pcall(vim.treesitter.start, bufnr, lang)
-			end
-		end,
-	})
-end
+		if pcall(vim.treesitter.language.add, lang) then
+			pcall(vim.treesitter.start, bufnr, lang)
+		end
+	end,
+})
