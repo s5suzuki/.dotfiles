@@ -17,6 +17,31 @@ return {
 
 			vim.keymap.set("n", "<leader>t", "<Cmd>ToggleTerm<CR>", { desc = "Terminal" })
 
+			local function terminal_cwd(pid)
+				local ok, lines = pcall(vim.fn.readfile, "/proc/" .. pid .. "/stat")
+				if ok and lines and lines[1] then
+					local after = lines[1]:match("%)%s+(.*)$")
+					if after then
+						local f = {}
+						for tok in after:gmatch("%S+") do
+							f[#f + 1] = tok
+						end
+						local tpgid = tonumber(f[6])
+						if tpgid and tpgid > 0 then
+							local cwd = vim.fn.resolve("/proc/" .. tpgid .. "/cwd")
+							if vim.fn.isdirectory(cwd) == 1 then
+								return cwd
+							end
+						end
+					end
+				end
+				local cwd = vim.fn.resolve("/proc/" .. pid .. "/cwd")
+				if vim.fn.isdirectory(cwd) == 1 then
+					return cwd
+				end
+				return nil
+			end
+
 			local function open_under_cursor_in_editor()
 				local cfile = vim.fn.expand("<cfile>")
 				if cfile == "" then
@@ -24,9 +49,24 @@ return {
 				end
 				local cur = vim.api.nvim_get_current_line()
 				local lnum = tonumber(cur:match(vim.pesc(cfile) .. ":(%d+)"))
+				local base = vim.fn.getcwd()
+				local pid = vim.b.terminal_job_pid
+				if pid then
+					local tcwd = terminal_cwd(pid)
+					if tcwd then
+						base = tcwd
+					end
+				end
+
 				local path = cfile
-				if vim.fn.filereadable(vim.fn.fnamemodify(path, ":p")) == 0 then
-					local found = vim.fn.findfile(cfile, ".;")
+				if path:sub(1, 1) ~= "/" then
+					path = base .. "/" .. cfile
+				end
+				if vim.fn.filereadable(path) == 0 then
+					local found = vim.fn.findfile(cfile, base .. ";")
+					if found == "" then
+						found = vim.fn.findfile(cfile, vim.fn.getcwd() .. ";")
+					end
 					if found ~= "" then
 						path = found
 					end
