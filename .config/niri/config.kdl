@@ -3,7 +3,6 @@ input {
         xkb {
 
         }
-        numlock
     }
     touchpad {
         // tap
