@@ -17,6 +17,48 @@ return {
 
 			vim.keymap.set("n", "<leader>t", "<Cmd>ToggleTerm<CR>", { desc = "Terminal" })
 
+			local function set_term_border_hl()
+				vim.api.nvim_set_hl(0, "ToggleTermBorderTerm", { fg = "#a6e3a1" })
+				vim.api.nvim_set_hl(0, "ToggleTermBorderNormal", { fg = "#fab387", bold = true })
+			end
+			set_term_border_hl()
+			vim.api.nvim_create_autocmd("ColorScheme", { callback = set_term_border_hl })
+
+			local function update_term_indicator()
+				if vim.bo.buftype ~= "terminal" then
+					return
+				end
+				local file = vim.api.nvim_buf_get_name(0)
+				if string.find(file, "lazygit") or string.find(file, "yazi") then
+					return
+				end
+				local win = vim.api.nvim_get_current_win()
+				local cfg = vim.api.nvim_win_get_config(win)
+				if cfg.relative == "" then
+					return
+				end
+				if vim.api.nvim_get_mode().mode:sub(1, 1) == "t" then
+					vim.wo[win].winhighlight = "FloatBorder:ToggleTermBorderTerm"
+					pcall(vim.api.nvim_win_set_config, win, {
+						title = { { " fish  (C-q: nvim-normal) ", "ToggleTermBorderTerm" } },
+						title_pos = "center",
+					})
+				else
+					vim.wo[win].winhighlight = "FloatBorder:ToggleTermBorderNormal"
+					pcall(vim.api.nvim_win_set_config, win, {
+						title = { { " NORMAL ", "ToggleTermBorderNormal" } },
+						title_pos = "center",
+					})
+				end
+			end
+
+			vim.api.nvim_create_autocmd({ "TermEnter", "TermLeave", "ModeChanged", "BufWinEnter" }, {
+				pattern = "*",
+				callback = function()
+					vim.schedule(update_term_indicator)
+				end,
+			})
+
 			local function terminal_cwd(pid)
 				local ok, lines = pcall(vim.fn.readfile, "/proc/" .. pid .. "/stat")
 				if ok and lines and lines[1] then
@@ -83,8 +125,8 @@ return {
 
 			local function set_terminal_keymaps()
 				local opts = { buffer = 0 }
-				vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], opts)
-				vim.keymap.set("t", "jj", [[<C-\><C-n>]], opts)
+
+				vim.keymap.set("t", "<C-q>", [[<C-\><C-n>]], opts)
 
 				local goto_cmd = "<Cmd>lua __toggleterm_goto_file()<CR>"
 				vim.keymap.set("n", "gf", goto_cmd, opts)
