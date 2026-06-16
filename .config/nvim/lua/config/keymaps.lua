@@ -26,6 +26,26 @@ keymap.set("v", "<C-_>", "gc", { remap = true, desc = "選択範囲をコメン�
 keymap.set({ "n", "v", "o" }, "gh", "^", { desc = "行頭(空白を除く)へ移動" })
 keymap.set({ "n", "v", "o" }, "gl", "$", { desc = "行末へ移動" })
 
+local function gf_file_only(key)
+	return function()
+		local cur = vim.api.nvim_get_current_buf()
+		local ok, err = pcall(vim.cmd, "keepalt normal! " .. key)
+		if not ok then
+			vim.api.nvim_echo({ { tostring(err):gsub("^.-Vim[^:]*:", ""), "ErrorMsg" } }, true, {})
+			return
+		end
+		local buf = vim.api.nvim_get_current_buf()
+		local name = vim.api.nvim_buf_get_name(buf)
+		if buf ~= cur and name ~= "" and vim.fn.isdirectory(name) == 1 then
+			vim.api.nvim_set_current_buf(cur)
+			pcall(vim.api.nvim_buf_delete, buf, { force = true })
+			vim.api.nvim_echo({ { "E: ディレクトリは開けません: " .. name, "ErrorMsg" } }, true, {})
+		end
+	end
+end
+keymap.set("n", "gf", gf_file_only("gf"), { desc = "gf (ディレクトリは開かない)" })
+keymap.set("n", "gF", gf_file_only("gF"), { desc = "gF (ディレクトリは開かない)" })
+
 keymap.set("n", "sv", "<cmd>vsplit<cr>", { desc = "垂直に分割" })
 keymap.set("n", "sx", "<cmd>split<cr>", { desc = "水平に分割" })
 
