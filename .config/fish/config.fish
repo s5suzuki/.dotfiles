@@ -88,3 +88,7 @@ alias start='xdg-open'
 alias clip='wl-copy'
 
 fish_config theme choose catppuccin-mocha
+
+if test -f ~/.config/fish/local-config.fish
+    source ~/.config/fish/local-config.fish
+end

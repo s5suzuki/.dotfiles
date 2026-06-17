@@ -8,3 +8,4 @@
 .config/bat/themes
 .config/fish/themes
 .antigravitycli/
+.config/fish/local-config.fish
