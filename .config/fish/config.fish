@@ -73,6 +73,7 @@ export SUDO_EDITOR=nvim
 abbr --add !! 'eval $history[1] | wl-copy'
 abbr --add yz 'yazi'
 abbr --add lg 'lazygit'
+abbr --add ga 'git commit --amend -m'
 
 alias ls='eza --icons --group-directories-first'
 alias ll='eza -la --icons --group-directories-first --git'
