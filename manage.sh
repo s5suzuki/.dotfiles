@@ -10,6 +10,11 @@ else
   OS=$(uname -s)
 fi
 
+case "$OS" in
+  Darwin) OS_FAMILY="macos" ;;
+  *) OS_FAMILY="linux" ;;
+esac
+
 ARCH_PACKAGES=(
   "atuin"
   "bat"
@@ -56,6 +61,46 @@ ARCH_PACKAGES=(
   "yazi"
   "zellij"
   "zoxide"
+)
+
+MAC_PACKAGES=(
+  "atuin"
+  "bat"
+  "bottom"
+  "btop"
+  "dust"
+  "eza"
+  "fd"
+  "fish"
+  "fzf"
+  "git"
+  "git-delta"
+  "lazygit"
+  "lua-language-server"
+  "neovim"
+  "procs"
+  "ripgrep"
+  "rust-analyzer"
+  "rustup"
+  "sd"
+  "starship"
+  "stylua"
+  "tree-sitter-cli"
+  "yazi"
+  "zellij"
+  "zoxide"
+  "acsandmann/tap/rift"       
+  "laishulu/homebrew/macism" 
+)
+
+MAC_CASKS=(
+  "firefox"
+  "ghostty"
+  "font-hackgen"        
+  "karabiner-elements" 
+  "google-japanese-ime"
+  "stats"             
+  "raycast"          
 )
 
 CONFIG_TARGETS=(
@@ -166,34 +211,76 @@ deploy() {
   touch "$HOME/.cargo/env.fish"
   touch .config/niri/local-config.kdl
 
-  echo "⚙️ fcitx5 の設定を配置します..."
-  if [ ! -d "$HOME/.local/share/fcitx5/themes/catppuccin-mocha-lavender" ]; then
-    git clone https://github.com/catppuccin/fcitx5.git
-    mkdir -p "$HOME/.local/share/fcitx5/themes/"
-    cp -r ./fcitx5/src/* "$HOME/.local/share/fcitx5/themes"
-    rm -rf ./fcitx5
-    echo "  ✓ Installed: catppuccin fcitx5 themes"
+  if [ "$OS_FAMILY" = "linux" ]; then
+    echo "⚙️ fcitx5 の設定を配置します..."
+    if [ ! -d "$HOME/.local/share/fcitx5/themes/catppuccin-mocha-lavender" ]; then
+      git clone https://github.com/catppuccin/fcitx5.git
+      mkdir -p "$HOME/.local/share/fcitx5/themes/"
+      cp -r ./fcitx5/src/* "$HOME/.local/share/fcitx5/themes"
+      rm -rf ./fcitx5
+      echo "  ✓ Installed: catppuccin fcitx5 themes"
+    fi
   fi
 
   echo "⚙️ bat のテーマを配置します..."
   if [ ! -d "$CONFIG_DIR/bat/themes/" ]; then
     mkdir -p "$CONFIG_DIR/bat/themes"
-    wget -P "$CONFIG_DIR/bat/themes" https://github.com/catppuccin/bat/raw/main/themes/Catppuccin%20Mocha.tmTheme
+    curl -fsSL -o "$CONFIG_DIR/bat/themes/Catppuccin Mocha.tmTheme" \
+      "https://github.com/catppuccin/bat/raw/main/themes/Catppuccin%20Mocha.tmTheme"
     echo "  ✓ Installed: catppuccin bat themes"
   fi
 
   echo "🌳 nvim tree-sitter クエリを配置します..."
   install_nvim_ts_queries
 
-  echo "⚙️ keyd の設定を配置します..."
-  if [ -d "$CONFIG_DIR/keyd" ]; then
-    sudo mkdir -p /etc/keyd
-    sudo ln -sf "$CONFIG_DIR/keyd/default.conf" /etc/keyd/default.conf
-    echo "  ✓ Linked: /etc/keyd/default.conf"
+  if [ "$OS_FAMILY" = "linux" ]; then
+    echo "⚙️ keyd の設定を配置します..."
+    if [ -d "$CONFIG_DIR/keyd" ]; then
+      sudo mkdir -p /etc/keyd
+      sudo ln -sf "$CONFIG_DIR/keyd/default.conf" /etc/keyd/default.conf
+      echo "  ✓ Linked: /etc/keyd/default.conf"
+    fi
+
+    echo "⚙️ keyd サービスを有効化します..."
+    sudo systemctl enable --now keyd
   fi
 
-  echo "⚙️ keyd サービスを有効化します..."
-  sudo systemctl enable --now keyd
+  if [ "$OS_FAMILY" = "macos" ]; then
+    echo "⚙️ karabiner の設定を配置します..."
+    mkdir -p "$CONFIG_DIR/karabiner"
+    kbjson="$CONFIG_DIR/karabiner/karabiner.json"
+    if [ -e "$kbjson" ] && [ ! -L "$kbjson" ]; then
+      mv "$kbjson" "${kbjson}.backup"
+    fi
+    ln -snf "$DOTFILES_DIR/.config/karabiner/karabiner.json" "$kbjson"
+    echo "  ✓ Linked: ~/.config/karabiner/karabiner.json"
+    echo "  ℹ️ 初回はシステム設定で Karabiner に Input Monitoring /"
+    echo "     アクセシビリティ権限を付与し、ドライバを有効化してください。"
+  fi
+
+  if [ "$OS_FAMILY" = "macos" ] && command -v rift > /dev/null 2>&1; then
+    echo "⚙️ rift (タイリング WM) の設定を配置します..."
+    mkdir -p "$CONFIG_DIR/rift"
+    riftcfg="$CONFIG_DIR/rift/config.toml"
+    if [ -e "$riftcfg" ] && [ ! -L "$riftcfg" ]; then
+      mv "$riftcfg" "${riftcfg}.backup"
+    fi
+    ln -snf "$DOTFILES_DIR/.config/rift/config.toml" "$riftcfg"
+    echo "  ✓ Linked: ~/.config/rift/config.toml"
+
+    echo "⚙️ rift サービスを設定します..."
+    rift service install
+    rift service start
+    rift service restart
+    echo "  ℹ️ 初回はシステム設定でアクセシビリティ権限を付与してください。"
+    echo "     権限付与後に 'rift service restart' を実行すると有効になります。"
+  fi
+
+  if [ "$OS_FAMILY" = "macos" ]; then
+    echo "⚙️ macOS のシステム設定を適用します..."
+    defaults write -g com.apple.keyboard.fnState -bool true
+    echo "  ✓ fnState = true (ログアウト/再起動後に反映)"
+  fi
 
   echo "⚙️ AIコミット生成スクリプトを配置します..."
   mkdir -p "$HOME/.local/bin"
@@ -240,18 +327,60 @@ install_packages() {
       fi
       paru -S --needed "${ARCH_PACKAGES[@]}"
       ;;
+    Darwin)
+      install_packages_macos
+      ;;
     *)
       echo "❌ 未対応のOSです: $OS"
       exit 1
       ;;
   esac
 
-  if [ "$SHELL" != "$(command -v fish)" ]; then
+  fish_path="$(command -v fish)"
+  if [ -n "$fish_path" ] && [ "$SHELL" != "$fish_path" ]; then
     echo "🐟 デフォルトシェルを fish に変更します..."
-    sudo chsh -s "$(command -v fish)" "$USER"
+    if [ "$OS_FAMILY" = "macos" ]; then
+      if ! grep -qx "$fish_path" /etc/shells; then
+        echo "$fish_path" | sudo tee -a /etc/shells > /dev/null
+      fi
+      chsh -s "$fish_path"
+    else
+      sudo chsh -s "$fish_path" "$USER"
+    fi
   fi
 
   echo "✅ インストール完了！"
+}
+
+install_packages_macos() {
+  if ! command -v brew > /dev/null 2>&1; then
+    echo "🍺 Homebrew が見つかりません。インストールします..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+    if [ -x /opt/homebrew/bin/brew ]; then
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+    elif [ -x /usr/local/bin/brew ]; then
+      eval "$(/usr/local/bin/brew shellenv)"
+    fi
+  fi
+
+  echo "📦 Homebrew formulae をインストールします..."
+  for pkg in "${MAC_PACKAGES[@]}"; do
+    if brew install "$pkg"; then
+      echo "  ✓ $pkg"
+    else
+      echo "  ⚠️ スキップ (失敗): $pkg"
+    fi
+  done
+
+  echo "🖥️ Homebrew cask をインストールします..."
+  for cask in "${MAC_CASKS[@]}"; do
+    if brew install --cask --adopt "$cask"; then
+      echo "  ✓ $cask"
+    else
+      echo "  ⚠️ スキップ (失敗): $cask"
+    fi
+  done
 }
 
 case "$1" in

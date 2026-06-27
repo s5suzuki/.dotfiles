@@ -29,10 +29,19 @@ vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
 vim.opt.foldtext = ""
 
+local ime_off_cmd
+if vim.fn.has("mac") == 1 then
+	ime_off_cmd = { "macism", "com.apple.keylayout.ABC" }
+else
+	ime_off_cmd = { "fcitx5-remote", "-c" }
+end
+
 vim.api.nvim_create_autocmd("InsertLeave", {
 	pattern = "*",
 	callback = function()
-		vim.fn.system("fcitx5-remote -c")
+		if vim.fn.executable(ime_off_cmd[1]) == 1 then
+			vim.system(ime_off_cmd)
+		end
 	end,
 })
 
