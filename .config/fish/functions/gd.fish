@@ -42,5 +42,7 @@ function gd -d "git done: remove current branch and switch to target branch"
     else
         echo "✅ Done!"
     end
+
+    git fetch --prune
 end
 
