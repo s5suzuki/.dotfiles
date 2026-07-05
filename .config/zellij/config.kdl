@@ -5,8 +5,14 @@
 //
 keybinds clear-defaults=true {
     locked {
+        bind "Alt [" {
+            GoToPreviousTab
+        }
+        bind "Alt ]" {
+            GoToNextTab
+        }
         bind "Alt left" {
-            MoveFocusOrTab "left"
+            MoveFocus "left"
         }
         bind "Alt down" {
             MoveFocus "down"
@@ -15,10 +21,10 @@ keybinds clear-defaults=true {
             MoveFocus "up"
         }
         bind "Alt right" {
-            MoveFocusOrTab "right"
+            MoveFocus "right"
         }
         bind "Alt h" {
-            MoveFocusOrTab "left"
+            MoveFocus "left"
         }
         bind "Alt j" {
             MoveFocus "down"
@@ -27,7 +33,7 @@ keybinds clear-defaults=true {
             MoveFocus "up"
         }
         bind "Alt l" {
-            MoveFocusOrTab "right"
+            MoveFocus "right"
         }
         bind "Ctrl g" {
             SwitchToMode "normal"
@@ -298,7 +304,7 @@ keybinds clear-defaults=true {
     }
     scroll {
         bind "Alt left" {
-            MoveFocusOrTab "left"
+            MoveFocus "left"
             SwitchToMode "normal"
         }
         bind "Alt down" {
@@ -310,7 +316,7 @@ keybinds clear-defaults=true {
             SwitchToMode "normal"
         }
         bind "Alt right" {
-            MoveFocusOrTab "right"
+            MoveFocus "right"
             SwitchToMode "normal"
         }
         bind "e" {
@@ -318,7 +324,7 @@ keybinds clear-defaults=true {
             SwitchToMode "normal"
         }
         bind "Alt h" {
-            MoveFocusOrTab "left"
+            MoveFocus "left"
             SwitchToMode "normal"
         }
         bind "Alt j" {
@@ -330,7 +336,7 @@ keybinds clear-defaults=true {
             SwitchToMode "normal"
         }
         bind "Alt l" {
-            MoveFocusOrTab "right"
+            MoveFocus "right"
             SwitchToMode "normal"
         }
         bind "s" {
@@ -413,10 +419,10 @@ keybinds clear-defaults=true {
             Resize "Increase"
         }
         bind "Alt [" {
-            PreviousSwapLayout
+            GoToPreviousTab
         }
         bind "Alt ]" {
-            NextSwapLayout
+            GoToNextTab
         }
         bind "Alt f" {
             ToggleFloatingPanes
@@ -455,7 +461,7 @@ keybinds clear-defaults=true {
     }
     shared_except "locked" "scroll" {
         bind "Alt left" {
-            MoveFocusOrTab "left"
+            MoveFocus "left"
         }
         bind "Alt down" {
             MoveFocus "down"
@@ -464,10 +470,10 @@ keybinds clear-defaults=true {
             MoveFocus "up"
         }
         bind "Alt right" {
-            MoveFocusOrTab "right"
+            MoveFocus "right"
         }
         bind "Alt h" {
-            MoveFocusOrTab "left"
+            MoveFocus "left"
         }
         bind "Alt j" {
             MoveFocus "down"
@@ -476,7 +482,7 @@ keybinds clear-defaults=true {
             MoveFocus "up"
         }
         bind "Alt l" {
-            MoveFocusOrTab "right"
+            MoveFocus "right"
         }
     }
     shared_except "locked" "scroll" "search" "tmux" {
