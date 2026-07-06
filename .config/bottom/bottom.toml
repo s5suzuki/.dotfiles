@@ -2,8 +2,8 @@
 # Licensed under MIT (https://github.com/catppuccin/bottom/blob/main/LICENSE)
 
 # This is a default config file for bottom.
-[flags]
-process_memory_as_value = true
+[processes]
+default_memory_value = true
 
 [styles]
 theme = "default"
