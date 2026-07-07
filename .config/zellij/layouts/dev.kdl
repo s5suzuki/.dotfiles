@@ -4,13 +4,21 @@ layout {
             plugin location="zellij:tab-bar"
         }
         pane split_direction="vertical" {
-            pane size="65%" {
-                pane command="nvim" focus=true size="70%" start_suspended=false
+            pane size="5%" command="twit" start_suspended=false {
+                args "--view" "sidebar"
+            }
+            pane size="7%" command="twit" start_suspended=false {
+                args "--view" "changes"
+            }
+            pane size="53%" {
+                pane size="70%" command="twit" focus=true start_suspended=false {
+                    args "--view" "main"
+                }
                 pane size="30%"
             }
             pane size="35%" {
                 pane
-                pane command="btop" size="40%" start_suspended=false
+                pane command="btop" size="30%" start_suspended=false
             }
         }
         pane size=1 borderless=true {
