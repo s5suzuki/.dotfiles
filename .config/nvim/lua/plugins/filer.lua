@@ -31,7 +31,6 @@ return {
 					content_layout = "center",
 					sources = {
 						{ source = "filesystem", display_name = " 󰉏 Files " },
-						{ source = "git_status", display_name = " 󰊢 Git " },
 					},
 				},
 
@@ -124,13 +123,6 @@ return {
 				"<leader>b",
 				"<Cmd>Neotree toggle position=left source=filesystem<CR>",
 				{ desc = "ファイルツリーを開閉" }
-			)
-
-			vim.keymap.set(
-				"n",
-				"<leader>gs",
-				"<Cmd>Neotree focus position=left source=git_status<CR>",
-				{ desc = "Gitステータスを開く" }
 			)
 		end,
 	},

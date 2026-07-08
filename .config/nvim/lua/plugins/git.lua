@@ -1,29 +1,5 @@
 return {
 	{
-		"sindrets/diffview.nvim",
-		opts = {
-			file_panel = {
-				listing_style = "tree",
-				tree_options = {
-					flatten_dirs = true,
-					folder_statuses = "only_folded",
-				},
-			},
-			keymaps = {
-				disable_defaults = false,
-				view = {
-					["q"] = "<Cmd>DiffviewClose<CR>",
-				},
-				file_panel = {
-					["q"] = "<Cmd>DiffviewClose<CR>",
-				},
-				file_history_panel = {
-					["q"] = "<Cmd>DiffviewClose<CR>",
-				},
-			},
-		},
-	},
-	{
 		"kdheepak/lazygit.nvim",
 		cmd = {
 			"LazyGit",
@@ -42,73 +18,6 @@ return {
 			vim.g.lazygit_floating_window_scaling_factor = 0.98
 		end,
 		config = function() end,
-	},
-	{
-		"isakbm/gitgraph.nvim",
-		dependencies = {
-			"sindrets/diffview.nvim",
-		},
-		opts = {
-			symbols = {
-				merge_commit = "○",
-				commit = "●",
-				merge_commit_end = "○",
-				commit_end = "●",
-
-				GVER = "│",
-				GHOR = "─",
-				GCLD = "╮",
-				GCRD = "╭",
-				GCLU = "╯",
-				GCRU = "╰",
-				GLRU = "┴",
-				GLRD = "┬",
-				GLUD = "┤",
-				GRUD = "├",
-				GFORK = "┼",
-				GFORKCR = "┼",
-			},
-			format = {
-				timestamp = "%Y-%m-%d %H:%M:%S",
-				fields = { "hash", "timestamp", "author", "branch_name", "tag" },
-			},
-			hooks = {
-				on_select_commit = function(commit)
-					vim.notify("Diffview " .. commit.hash .. "^!")
-					vim.cmd(":DiffviewOpen " .. commit.hash .. "^!")
-				end,
-				on_select_range_commit = function(from, to)
-					vim.notify("Diffview " .. from.hash .. "~1.." .. to.hash)
-					vim.cmd(":DiffviewOpen " .. from.hash .. "~1.." .. to.hash)
-				end,
-			},
-		},
-		keys = {
-			{
-				"<leader>gl",
-				function()
-					require("gitgraph").draw({}, { all = true, max_count = 5000 })
-				end,
-				desc = "GitGraphを開く",
-			},
-		},
-		config = function(_, opts)
-			local colors = {
-				"#F14C4C",
-				"#3794FF",
-				"#89D185",
-				"#CCA700",
-				"#B267E6",
-				"#4CBF99",
-			}
-			for i, color in ipairs(colors) do
-				vim.api.nvim_set_hl(0, "GitGraphBranch" .. i, { fg = color, bold = true })
-			end
-			vim.api.nvim_set_hl(0, "GitGraphTimestamp", { fg = "#6a9955" })
-			vim.api.nvim_set_hl(0, "GitGraphAuthor", { fg = "#4EC9B0" })
-
-			require("gitgraph").setup(opts)
-		end,
 	},
 	{
 		"lewis6991/gitsigns.nvim",
