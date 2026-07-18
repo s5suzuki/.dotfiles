@@ -39,6 +39,12 @@ type = "shell"
 command = "herdr-dev"
 description = "open dev layout (herdr-dev)"
 
+[theme]
+# catppuccin = mocha フレーバー（dark 既定）
+name = "catppuccin"
+
 [ui]
 agent_panel_sort = "spaces"
 pane_gaps = false
+# アクセント: catppuccin mocha lavender
+accent = "#b4befe"
