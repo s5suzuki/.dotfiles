@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+herdr session list --json 2> /dev/null |
+  jq -r '.sessions[]
+    | "\(.name)\t\(if .running then "running" else "stopped" end)\(if .default then " (default)" else "" end)"'

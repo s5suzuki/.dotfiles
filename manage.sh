@@ -113,6 +113,7 @@ CONFIG_TARGETS=(
   "fcitx5"
   "fish"
   "ghostty"
+  "herdr/config.toml"
   "keyd"
   "lazygit"
   "niri"
@@ -287,6 +288,13 @@ deploy() {
   ln -snf "$DOTFILES_DIR/src/scripts/ai-commit-gen" "$HOME/.local/bin/ai-commit-gen"
   chmod +x "$DOTFILES_DIR/src/scripts/ai-commit-gen"
   echo "  ✓ Linked: ~/.local/bin/ai-commit-gen"
+
+  echo "⚙️ herdr 用スクリプトを配置します..."
+  for herdr_script in herdr-dev herdr-sessions; do
+    ln -snf "$DOTFILES_DIR/src/scripts/$herdr_script" "$HOME/.local/bin/$herdr_script"
+    chmod +x "$DOTFILES_DIR/src/scripts/$herdr_script"
+    echo "  ✓ Linked: ~/.local/bin/$herdr_script"
+  done
 
   echo "✅ デプロイ完了！"
 }

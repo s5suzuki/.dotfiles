@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+SESSION=""
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --session)
+      SESSION="${2:-}"
+      shift 2
+      ;;
+    --session=*)
+      SESSION="${1#*=}"
+      shift
+      ;;
+    -h | --help)
+      echo "usage: herdr-dev [--session NAME]"
+      exit 0
+      ;;
+    *)
+      echo "herdr-dev: unknown arg: $1" >&2
+      exit 2
+      ;;
+  esac
+done
+
+for bin in herdr jq; do
+  command -v "$bin" > /dev/null 2>&1 || {
+    echo "herdr-dev: '$bin' is required" >&2
+    exit 1
+  }
+done
+
+H() {
+  if [ -n "$SESSION" ]; then
+    herdr "$@" --session "$SESSION"
+  else
+    herdr "$@"
+  fi
+}
+
+WS_CREATED=0
+if [ "$(H workspace list | jq -r '.result.workspaces | length')" = "0" ]; then
+  H workspace create --focus > /dev/null
+  WS_CREATED=1
+fi
+
+TAB_JSON=$(H tab create --label Code --focus)
+ROOT=$(printf '%s' "$TAB_JSON" | jq -r '.result.root_pane.pane_id')
+if [ -z "$ROOT" ] || [ "$ROOT" = "null" ]; then
+  echo "herdr-dev: cannot get root pane" >&2
+  echo "$TAB_JSON" >&2
+  exit 1
+fi
+
+NEW_TAB=$(printf '%s' "$TAB_JSON" | jq -r '.result.tab.tab_id')
+WS="${NEW_TAB%%:*}"
+
+H tab list --workspace "$WS" |
+  jq -r --arg keep "$NEW_TAB" --arg created "$WS_CREATED" \
+    '.result.tabs[] | select(.tab_id != $keep) | select(.label == "Code" or $created == "1") | .tab_id' |
+  while read -r t; do
+    [ -n "$t" ] && H tab close "$t" > /dev/null 2>&1 || true
+  done
+
+split() { # <pane_id> <right|down> <ratio>
+  H pane split "$1" --direction "$2" --ratio "$3" --no-focus |
+    jq -r '.result.pane.pane_id'
+}
+
+run() { # <pane_id> <command>
+  H pane run "$1" "$2" > /dev/null
+}
+
+SIDEBAR="$ROOT"
+MAINCOL=$(split "$SIDEBAR" right 0.15)
+CHANGES=$(split "$SIDEBAR" right 0.4)
+RIGHTCOL=$(split "$MAINCOL" right 0.6)
+
+MAIN_EMPTY=$(split "$MAINCOL" down 0.70)
+RIGHT_BTOP=$(split "$RIGHTCOL" down 0.70)
+
+run "$SIDEBAR" "twit --view sidebar"
+run "$CHANGES" "twit --view changes"
+run "$MAINCOL" "twit --view main"
+run "$RIGHT_BTOP" "btop"
+
+H pane focus --direction right --current > /dev/null 2>&1 || true
+H pane focus --direction right --current > /dev/null 2>&1 || true

@@ -1,0 +1,44 @@
+onboarding = false
+
+[keys]
+prefix = "ctrl+g"
+
+focus_pane_left = ["alt+h", "alt+left"]
+focus_pane_down = ["alt+j", "alt+down"]
+focus_pane_up = ["alt+k", "alt+up"]
+focus_pane_right = ["alt+l", "alt+right"]
+
+cycle_pane_next = "prefix+tab"
+cycle_pane_previous = "prefix+shift+tab"
+
+previous_tab = "alt+["
+next_tab = "alt+]"
+switch_tab = "prefix+1..9"
+
+next_workspace = "prefix+j"
+previous_workspace = "prefix+k"
+
+split_vertical = "prefix+r"
+split_horizontal = "prefix+d"
+
+resize_mode = "prefix+n"
+
+new_tab = "prefix+c"
+close_pane = "prefix+x"
+zoom = "prefix+z"
+rename_pane = "prefix+shift+p"
+rename_tab = "prefix+shift+t"
+close_tab = "prefix+shift+x"
+detach = "prefix+q"
+edit_scrollback = "prefix+e"
+toggle_sidebar = "prefix+b"
+
+[[keys.command]]
+key = "prefix+ctrl+r"
+type = "shell"
+command = "herdr-dev"
+description = "open dev layout (herdr-dev)"
+
+[ui]
+agent_panel_sort = "spaces"
+pane_gaps = false
