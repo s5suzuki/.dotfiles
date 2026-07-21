@@ -54,9 +54,9 @@ customCommands:
         key: 'Model'
         options:
           - name: 'Gemini 3.5 Flash (高速)'
-            value: 'gemini-3.5-flash-lite-preview'
+            value: 'flash'
           - name: 'Gemini 3.1 Pro (高品質)'
-            value: 'gemini-3.1-pro-preview'
+            value: 'pro'
       - type: 'menuFromCommand'
         title: '候補を選択 (Enterで編集へ)'
         key: 'Msg'

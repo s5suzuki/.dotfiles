@@ -1,20 +1,31 @@
 #!/bin/bash
-MODEL=$1
-DIFF=$(git diff --cached)
+
+case "$1" in
+  pro) MODEL="Gemini 3.1 Pro (High)" ;;
+  *) MODEL="Gemini 3.5 Flash (Low)" ;;
+esac
+
+DIFF=$(git diff --cached | head -c 100000)
 
 if [ -z "$DIFF" ]; then
   echo "Staged changes not found."
   exit 1
 fi
 
-PROMPT="Generate 5 concise and descriptive git commit messages for the following changes. 
-Output ONLY the messages, one per line, without any numbering, headers, or markdown formatting. 
-Focus on 'what' and 'why'."
+PROMPT="You are writing git commit messages. Below is the staged diff.
+Generate 5 concise, descriptive commit messages that accurately reflect ONLY the
+changes in this diff. Focus on 'what' and 'why'.
+Output ONLY the messages, one per line, without numbering, headers, or markdown.
+Do not use any tools; answer directly from the diff below.
 
-RESULT=$(echo "$DIFF" | agy -p "$PROMPT" 2> /dev/null)
+--- BEGIN DIFF ---
+$DIFF
+--- END DIFF ---"
+
+RESULT=$(agy --model "$MODEL" -p "$PROMPT" 2> /dev/null)
 
 if [ -z "$RESULT" ]; then
-  RESULT=$(echo "$DIFF" | agy -p "$PROMPT" 2> /dev/null)
+  RESULT=$(agy --model "$MODEL" -p "$PROMPT" 2> /dev/null)
 fi
 
 if [ -z "$RESULT" ]; then
