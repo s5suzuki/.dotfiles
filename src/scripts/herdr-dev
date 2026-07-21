@@ -3,6 +3,7 @@
 set -euo pipefail
 
 SESSION=""
+CWD=""
 while [ $# -gt 0 ]; do
   case "$1" in
     --session)
@@ -13,8 +14,16 @@ while [ $# -gt 0 ]; do
       SESSION="${1#*=}"
       shift
       ;;
+    --cwd)
+      CWD="${2:-}"
+      shift 2
+      ;;
+    --cwd=*)
+      CWD="${1#*=}"
+      shift
+      ;;
     -h | --help)
-      echo "usage: herdr-dev [--session NAME]"
+      echo "usage: herdr-dev [--session NAME] [--cwd PATH]"
       exit 0
       ;;
     *)
@@ -23,6 +32,11 @@ while [ $# -gt 0 ]; do
       ;;
   esac
 done
+
+CWD_ARGS=()
+if [ -n "$CWD" ]; then
+  CWD_ARGS=(--cwd "$CWD")
+fi
 
 for bin in herdr jq; do
   command -v "$bin" > /dev/null 2>&1 || {
@@ -41,11 +55,11 @@ H() {
 
 WS_CREATED=0
 if [ "$(H workspace list | jq -r '.result.workspaces | length')" = "0" ]; then
-  H workspace create --focus > /dev/null
+  H workspace create "${CWD_ARGS[@]}" --focus > /dev/null
   WS_CREATED=1
 fi
 
-TAB_JSON=$(H tab create --label Code --focus)
+TAB_JSON=$(H tab create "${CWD_ARGS[@]}" --label Code --focus)
 ROOT=$(printf '%s' "$TAB_JSON" | jq -r '.result.root_pane.pane_id')
 if [ -z "$ROOT" ] || [ "$ROOT" = "null" ]; then
   echo "herdr-dev: cannot get root pane" >&2
@@ -64,7 +78,7 @@ H tab list --workspace "$WS" |
   done
 
 split() { # <pane_id> <right|down> <ratio>
-  H pane split "$1" --direction "$2" --ratio "$3" --no-focus |
+  H pane split "$1" --direction "$2" --ratio "$3" "${CWD_ARGS[@]}" --no-focus |
     jq -r '.result.pane.pane_id'
 }
 
