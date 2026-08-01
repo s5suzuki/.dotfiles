@@ -1,3 +1,6 @@
+[dock]
+reserve_space = false
+
 [bar.default]
 center = ["date", "clock"]
 end = [
