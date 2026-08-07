@@ -1,13 +1,6 @@
 [include]
 	path = ~/.config/delta/themes/catppuccin.gitconfig
 
-[credential]
-	helper = store
-
-[user]
-	email = suzuki@hapis.k.u-tokyo.ac.jp
-	name = shun suzuki
-
 [core]
     editor = nvim
     pager = delta
@@ -26,3 +19,6 @@
 
 [merge]
     conflictStyle = zdiff3
+
+[include]
+	path = ~/.gitconfig.local
