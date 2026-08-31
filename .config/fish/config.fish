@@ -35,7 +35,7 @@ function fish_user_key_bindings
 
     bind -M insert \cl accept-autosuggestion
 
-    bind -M default k _atuin_search
+    bind -M default k __atuin_search_or_up
 end
 
 function __fish_vi_escape_j
@@ -66,6 +66,14 @@ function __fish_vi_escape_k
         end
     end
     commandline -i k
+end
+
+function __atuin_search_or_up
+    if test (commandline --line) -gt 1
+        fish_vi_run_count up-line
+    else
+        _atuin_search
+    end
 end
 
 export SUDO_EDITOR=nvim
