@@ -20,5 +20,22 @@
 [merge]
     conflictStyle = zdiff3
 
+[credential "https://github.com"]
+	helper =
+	helper = !$HOME/.dotfiles/src/scripts/git-credential-gh-user
+[credential "https://gist.github.com"]
+	helper =
+	helper = !$HOME/.dotfiles/src/scripts/git-credential-gh-user
+
+#   [includeIf "hasconfig:remote.*.url:**/<owner>/**"]
+#   	path = ~/.config/git/accounts/<account>.gitconfig
+#   [includeIf "hasconfig:remote.*.url:**:<owner>/**"]
+#   	path = ~/.config/git/accounts/<account>.gitconfig
+#
+#  	```~/.config/git/accounts/<account>.gitconfig
+#  	[gh]
+#  	    user = <account>
+#  	```
+
 [include]
 	path = ~/.gitconfig.local
