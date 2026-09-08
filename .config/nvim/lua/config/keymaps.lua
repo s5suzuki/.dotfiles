@@ -12,8 +12,18 @@ keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR><Esc>", { desc = "検索ハイラ�
 keymap.set("x", "p", '"_dP', { desc = "ペースト時にレジスタを上書きしない" })
 keymap.set({ "n", "v" }, "-", '"_', { desc = "ブラックホールレジスタを使用" })
 
-keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "選択行を下に移動" })
-keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "選択行を上に移動" })
+local function has_indent_rule()
+	return vim.bo.indentexpr ~= "" or vim.o.equalprg ~= "" or vim.bo.cindent or vim.bo.lisp
+end
+
+local function move_selection(range)
+	return function()
+		return ":m " .. range .. vim.keycode("<CR>") .. (has_indent_rule() and "gv=gv" or "gv")
+	end
+end
+
+keymap.set("v", "J", move_selection("'>+1"), { expr = true, desc = "選択行を下に移動" })
+keymap.set("v", "K", move_selection("'<-2"), { expr = true, desc = "選択行を上に移動" })
 
 keymap.set("n", "n", "nzzzv", { desc = "次の検索結果へ(中央保持)" })
 keymap.set("n", "N", "Nzzzv", { desc = "前の検索結果へ(中央保持)" })
