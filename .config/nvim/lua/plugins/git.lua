@@ -1,25 +1,5 @@
 return {
 	{
-		"kdheepak/lazygit.nvim",
-		cmd = {
-			"LazyGit",
-			"LazyGitConfig",
-			"LazyGitCurrentFile",
-			"LazyGitFilter",
-			"LazyGitFilterCurrentFile",
-		},
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
-		keys = {
-			{ "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGitを起動" },
-		},
-		init = function()
-			vim.g.lazygit_floating_window_scaling_factor = 0.98
-		end,
-		config = function() end,
-	},
-	{
 		"lewis6991/gitsigns.nvim",
 		event = { "BufReadPre", "BufNewFile" },
 		opts = {

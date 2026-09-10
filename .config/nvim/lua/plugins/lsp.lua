@@ -180,7 +180,10 @@ return {
 					if ft == "c" or ft == "cpp" then
 						if vim.fn.executable("clang-format") == 1 then
 							local lines = vim.api.nvim_buf_get_lines(event.buf, 0, -1, false)
-							local output = vim.fn.systemlist({ "clang-format", "-assume-filename=" .. vim.api.nvim_buf_get_name(event.buf) }, lines)
+							local output = vim.fn.systemlist(
+								{ "clang-format", "-assume-filename=" .. vim.api.nvim_buf_get_name(event.buf) },
+								lines
+							)
 
 							if vim.v.shell_error == 0 then
 								vim.api.nvim_buf_set_lines(event.buf, 0, -1, false, output)

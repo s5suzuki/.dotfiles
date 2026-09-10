@@ -89,18 +89,18 @@ MAC_PACKAGES=(
   "yazi"
   "zellij"
   "zoxide"
-  "acsandmann/tap/rift"       
-  "laishulu/homebrew/macism" 
+  "acsandmann/tap/rift"
+  "laishulu/homebrew/macism"
 )
 
 MAC_CASKS=(
   "firefox"
   "ghostty"
-  "font-hackgen"        
-  "karabiner-elements" 
+  "font-hackgen"
+  "karabiner-elements"
   "google-japanese-ime"
-  "stats"             
-  "raycast"          
+  "stats"
+  "raycast"
 )
 
 CONFIG_TARGETS=(
@@ -282,12 +282,6 @@ deploy() {
     defaults write -g com.apple.keyboard.fnState -bool true
     echo "  ✓ fnState = true (ログアウト/再起動後に反映)"
   fi
-
-  echo "⚙️ AIコミット生成スクリプトを配置します..."
-  mkdir -p "$HOME/.local/bin"
-  ln -snf "$DOTFILES_DIR/src/scripts/ai-commit-gen" "$HOME/.local/bin/ai-commit-gen"
-  chmod +x "$DOTFILES_DIR/src/scripts/ai-commit-gen"
-  echo "  ✓ Linked: ~/.local/bin/ai-commit-gen"
 
   echo "⚙️ herdr 用スクリプトを配置します..."
   for herdr_script in herdr-dev herdr-sessions; do
