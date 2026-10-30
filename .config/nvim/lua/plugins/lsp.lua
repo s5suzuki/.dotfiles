@@ -67,12 +67,17 @@ return {
 				},
 			}
 
+			vim.lsp.config.verible = {
+				cmd = { "verible-verilog-ls", "--rules_config_search" },
+			}
+
 			vim.lsp.enable("lua_ls")
 			vim.lsp.enable("rust_analyzer")
 			vim.lsp.enable("jsonls")
 			vim.lsp.enable("taplo")
 			vim.lsp.enable("bashls")
 			vim.lsp.enable("clangd")
+			vim.lsp.enable("verible")
 
 			local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 			for type, icon in pairs(signs) do
