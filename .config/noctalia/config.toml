@@ -8,7 +8,6 @@ end = [
     "ram",
     "tray",
     "notifications",
-    "clipboard",
     "network",
     "bluetooth",
     "volume",
@@ -32,6 +31,8 @@ enabled = false
 
 [lockscreen]
 blurred_desktop = true
+transition = []
+transition_duration = 100
 
 [nightlight]
 enabled = true
@@ -45,8 +46,11 @@ settings_show_advanced = true
 ui_scale = 1.0500000081956387
 
 [theme]
-community_palette = "Catppuccin Lavender"
+builtin = "Noctalia"
+community_palette = "Catppuccin Mocha Lavender"
+mode = "dark"
 source = "community"
+wallpaper_scheme = "m3-content"
 
 [theme.templates]
 builtin_ids = ["niri"]
@@ -67,7 +71,7 @@ behavior_order = ["lock", "screen-off", "lock-and-suspend"]
 [idle.behavior.lock]
 action = "lock"
 enabled = true
-timeout = 600
+timeout = 1800
 
 [idle.behavior.lock-and-suspend]
 action = "lock_and_suspend"
@@ -77,4 +81,4 @@ timeout = 900
 [idle.behavior.screen-off]
 action = "screen_off"
 enabled = true
-timeout = 660
+timeout = 1800

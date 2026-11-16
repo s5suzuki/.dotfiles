@@ -41,15 +41,21 @@ ARCH_PACKAGES=(
   "herdr"
   "kdlfmt"
   "keyd"
+  "kwin"
+  "layer-shell-qt"
   "lua-language-server"
   "neovim"
   "niri"
   "noctalia"
   "openssh"
   "procs"
+  "qt6-virtualkeyboard"
+  "qt6-wayland"
   "ripgrep"
   "rust-analyzer"
   "rustup"
+  "sddm"
+  "sddm-silent-theme"
   "shfmt"
   "starship"
   "stylua"
@@ -85,7 +91,6 @@ MAC_PACKAGES=(
   "fzf"
   "git"
   "git-delta"
-  "lazygit"
   "lua-language-server"
   "neovim"
   "procs"
@@ -97,7 +102,6 @@ MAC_PACKAGES=(
   "stylua"
   "tree-sitter-cli"
   "yazi"
-  "zellij"
   "zoxide"
   "acsandmann/tap/rift"
   "laishulu/homebrew/macism"
@@ -125,7 +129,6 @@ CONFIG_TARGETS=(
   "ghostty"
   "herdr/config.toml"
   "keyd"
-  "lazygit"
   "niri"
   "noctalia"
   "nvim"
@@ -253,6 +256,15 @@ deploy() {
 
     echo "⚙️ keyd サービスを有効化します..."
     sudo systemctl enable --now keyd
+
+    echo "⚙️ sddm の設定を配置します..."
+    sudo install -Dm644 -t /etc/sddm.conf.d "$DOTFILES_DIR"/etc/sddm.conf.d/*.conf
+    echo "  ✓ Installed: /etc/sddm.conf.d/*.conf"
+    silent_meta=/usr/share/sddm/themes/silent/metadata.desktop
+    if [ -f "$silent_meta" ]; then
+      sudo sed -i 's|^ConfigFile=.*|ConfigFile=configs/catppuccin-mocha.conf|' "$silent_meta"
+      echo "  ✓ silent theme: catppuccin-mocha"
+    fi
   fi
 
   if [ "$OS_FAMILY" = "macos" ]; then
