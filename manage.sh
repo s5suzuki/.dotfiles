@@ -138,6 +138,8 @@ CONFIG_TARGETS=(
 
 HOME_TARGETS=(
   ".gitconfig"
+  ".claude/hooks/no-comments.py"
+  ".claude/statusline-command.sh"
 )
 
 NVIM_TS_QUERY_LANGS=(
@@ -190,6 +192,7 @@ backup() {
         fi
       fi
 
+      mkdir -p "$(dirname "$dest")"
       rm -rf "$dest"
       cp -r "$src" "$dest"
       echo "  ✓ Saved: ~/$target"
@@ -216,6 +219,7 @@ deploy() {
     if [ -e "$HOME/$target" ] && [ ! -L "$HOME/$target" ]; then
       mv "$HOME/$target" "$HOME/${target}.backup"
     fi
+    mkdir -p "$(dirname "$HOME/$target")"
     ln -snf "$DOTFILES_DIR/$target" "$HOME/$target"
     echo "  ✓ Linked: ~/$target"
   done
@@ -305,6 +309,7 @@ deploy() {
   fi
 
   echo "⚙️ herdr 用スクリプトを配置します..."
+  mkdir -p "$HOME/.local/bin"
   for herdr_script in herdr-dev herdr-sessions; do
     ln -snf "$DOTFILES_DIR/src/scripts/$herdr_script" "$HOME/.local/bin/$herdr_script"
     chmod +x "$DOTFILES_DIR/src/scripts/$herdr_script"
