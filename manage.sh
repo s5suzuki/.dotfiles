@@ -394,6 +394,9 @@ install_packages_macos() {
 
   echo "📦 Homebrew formulae をインストールします..."
   for pkg in "${MAC_PACKAGES[@]}"; do
+    if [[ "$pkg" == */*/* ]]; then
+      brew trust --formula "$pkg" > /dev/null 2>&1 || true
+    fi
     if brew install "$pkg"; then
       echo "  ✓ $pkg"
     else

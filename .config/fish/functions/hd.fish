@@ -29,7 +29,11 @@ function hd -d "launch/attach a herdr session for the directory (dev layout on f
 
     if test -z "$exists"
         set -l sock "$HOME/.config/herdr/sessions/$session_name/herdr.sock"
-        setsid herdr --session "$session_name" server >/dev/null 2>&1 &
+        if command -q setsid
+            setsid herdr --session "$session_name" server >/dev/null 2>&1 &
+        else
+            herdr --session "$session_name" server </dev/null >/dev/null 2>&1 &
+        end
         disown
         for i in (seq 1 50)
             test -S "$sock"; and break
