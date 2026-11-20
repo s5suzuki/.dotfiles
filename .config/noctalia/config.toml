@@ -82,3 +82,13 @@ timeout = 900
 action = "screen_off"
 enabled = true
 timeout = 1800
+
+[widget.mouse_battery]
+type = "battery"
+device = "MX Ergo"
+display_mode = "glyph"
+
+[widget.keyboard_battery]
+type = "battery"
+device = "HHKB-Hybrid_1"
+display_mode = "glyph"
