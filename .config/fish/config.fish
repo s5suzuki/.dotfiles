@@ -93,6 +93,7 @@ alias ps='procs'
 alias du='dust'
 alias start='xdg-open'
 alias clip='wl-copy'
+alias insync-fix="insync quit; sleep 5; sqlite3 ~/.config/Insync/live/live-gd-*.db \"delete from cl_extras where key like 'ul-sess-add-%'\"; insync start"
 
 fish_config theme choose catppuccin-mocha
 
