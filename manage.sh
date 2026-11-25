@@ -27,6 +27,7 @@ ARCH_PACKAGES=(
   "fd"
   "firefox"
   "fish"
+  "foot"
   "fcitx5"
   "fcitx5-configtool"
   "fcitx5-gtk"
@@ -76,6 +77,7 @@ ARCH_PACKAGES=(
   "wl-clipboard"
   "xwayland-satellite"
   "yazi"
+  "zellij"
   "zoxide"
 )
 
@@ -102,6 +104,7 @@ MAC_PACKAGES=(
   "stylua"
   "tree-sitter-cli"
   "yazi"
+  "zellij"
   "zoxide"
   "acsandmann/tap/rift"
   "laishulu/homebrew/macism"
@@ -126,6 +129,7 @@ CONFIG_TARGETS=(
   "eza"
   "fcitx5"
   "fish"
+  "foot"
   "ghostty"
   "herdr/config.toml"
   "keyd"
@@ -134,6 +138,7 @@ CONFIG_TARGETS=(
   "nvim"
   "starship.toml"
   "yazi"
+  "zellij"
 )
 
 HOME_TARGETS=(
@@ -260,6 +265,9 @@ deploy() {
 
     echo "⚙️ keyd サービスを有効化します..."
     sudo systemctl enable --now keyd
+
+    echo "⚙️ foot サーバー (niri の Mod+T = footclient 用) を有効化します..."
+    systemctl --user enable --now foot-server.socket
 
     echo "⚙️ sddm の設定を配置します..."
     sudo install -Dm644 -t /etc/sddm.conf.d "$DOTFILES_DIR"/etc/sddm.conf.d/*.conf
