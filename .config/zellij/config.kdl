@@ -47,6 +47,14 @@ keybinds clear-defaults=true {
             }
             SwitchToMode "locked"
         }
+        bind "Ctrl w" {
+            Run "fish" "-c" "read -P 'worktree branch: ' b; or exit; wt $b; or read -P 'wt failed. Enter to close' _" {
+                floating true
+                close_on_exit true
+                name "new worktree"
+            }
+            SwitchToMode "locked"
+        }
     }
     pane {
         bind "left" {
