@@ -83,7 +83,7 @@ abbr --add yz 'yazi'
 abbr --add ga 'git commit --amend -m'
 
 alias ls='eza --icons --group-directories-first'
-alias ll='eza -la --icons --group-directories-first --git'
+alias ll='eza -l --icons --group-directories-first --git'
 alias lt='eza --tree --level=2 --icons'
 alias cat='bat'
 alias top='btm'
