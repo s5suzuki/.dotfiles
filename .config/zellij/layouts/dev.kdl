@@ -4,21 +4,23 @@ layout {
             plugin location="zellij:tab-bar"
         }
         pane split_direction="vertical" {
-            pane size="5%" command="twit" start_suspended=false {
-                args "--view" "sidebar"
+            pane size="5%" command="fish" start_suspended=false {
+                args "-C" "twit --view sidebar"
             }
-            pane size="7%" command="twit" start_suspended=false {
-                args "--view" "changes"
+            pane size="7%" command="fish" start_suspended=false {
+                args "-C" "twit --view changes"
             }
             pane size="53%" {
-                pane size="70%" command="twit" focus=true start_suspended=false {
-                    args "--view" "main"
+                pane size="70%" command="fish" focus=true start_suspended=false {
+                    args "-C" "twit --view main"
                 }
                 pane size="30%"
             }
             pane size="35%" {
                 pane
-                pane command="btop" size="30%" start_suspended=false
+                pane command="fish" size="30%" start_suspended=false {
+                    args "-C" "btop"
+                }
             }
         }
         pane size=1 borderless=true {
