@@ -106,7 +106,6 @@ MAC_PACKAGES=(
   "yazi"
   "zellij"
   "zoxide"
-  "acsandmann/tap/rift"
   "laishulu/homebrew/macism"
 )
 
@@ -290,24 +289,6 @@ deploy() {
     echo "  ✓ Linked: ~/.config/karabiner/karabiner.json"
     echo "  ℹ️ 初回はシステム設定で Karabiner に Input Monitoring /"
     echo "     アクセシビリティ権限を付与し、ドライバを有効化してください。"
-  fi
-
-  if [ "$OS_FAMILY" = "macos" ] && command -v rift > /dev/null 2>&1; then
-    echo "⚙️ rift (タイリング WM) の設定を配置します..."
-    mkdir -p "$CONFIG_DIR/rift"
-    riftcfg="$CONFIG_DIR/rift/config.toml"
-    if [ -e "$riftcfg" ] && [ ! -L "$riftcfg" ]; then
-      mv "$riftcfg" "${riftcfg}.backup"
-    fi
-    ln -snf "$DOTFILES_DIR/.config/rift/config.toml" "$riftcfg"
-    echo "  ✓ Linked: ~/.config/rift/config.toml"
-
-    echo "⚙️ rift サービスを設定します..."
-    rift service install
-    rift service start
-    rift service restart
-    echo "  ℹ️ 初回はシステム設定でアクセシビリティ権限を付与してください。"
-    echo "     権限付与後に 'rift service restart' を実行すると有効になります。"
   fi
 
   if [ "$OS_FAMILY" = "macos" ]; then
