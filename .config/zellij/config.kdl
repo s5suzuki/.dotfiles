@@ -41,9 +41,10 @@ keybinds clear-defaults=true {
     }
     normal {
         bind "Ctrl r" {
-            OverrideLayout {
-                layout "dev"
-                apply_only_to_active_tab true
+            Run "fish" "-c" "zjrelayout" {
+                floating true
+                close_on_exit true
+                name "relayout"
             }
             SwitchToMode "locked"
         }
@@ -128,9 +129,10 @@ keybinds clear-defaults=true {
             SwitchToMode "normal"
         }
         bind "Ctrl r" {
-            OverrideLayout {
-                layout "dev"
-                apply_only_to_active_tab true
+            Run "fish" "-c" "zjrelayout" {
+                floating true
+                close_on_exit true
+                name "relayout"
             }
             SwitchToMode "normal"
         }
@@ -804,6 +806,8 @@ pane_frames false
 //   - quit
 //
 on_force_close "detach"
+// Ctrl q: quit without the ask_quit/ask_detach prompt
+on_quit "quit"
 // Configure the scroll back buffer size
 // This is the number of lines zellij stores for each pane in the scroll back
 // buffer. Excess number of lines are discarded in a FIFO fashion.
